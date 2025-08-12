@@ -17,7 +17,8 @@ output: html_document
 
 `rta_2024028.csv`: Mario Larch's Regional Trade Agreements Database from Eggar and Larch (2008)
 https://www.ewf.uni-bayreuth.de/en/research/RTA-data/index.html
-  
+
+`LTE.xlsx`: LTE adoptation data 
 
 `BIMTS_HS2017_2D_CSV_1995_To_2023` downloaded from [OECD BIMTS database](https://data-explorer.oecd.org/vis?fs[0]=Topic%2C1%7CTrade%23TRD%23%7CTrade%20in%20goods%20and%20services%23TRD_GDS%23&pg=0&fc=Topic&bp=true&snb=24&df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_BIMTS%40DF_BIMTS_HS2017_2D&df[ag]=OECD.SDD.TPS&df[vs]=1.0) produces,
 `HS17_2D_DE_2000_To_2004.csv`
@@ -55,6 +56,9 @@ All these six files downloaded from OECD are more than 2GB in size.Reproduction 
 `comcol_edgelist.csv`: This is dyadic common colonizer edgelist created from `fixed.csv`.
 `language_edgelist.csv`: This is dyadic language edgelist created from `fixed.csv`.
 
+`LTE.csv`: LTE adoptation data prepared from `LTE.xlsx`
+`LTE_long.csv`: LTE adoptation data in long format
+
 `internet.csv`: cleaned internet penetration data as an edglelist
 `internet_long.csv`: `internet.csv` stacked to long format
 `gdp_pct.csv`: cleaned GDP per capita data as an edglelist
@@ -62,9 +66,7 @@ All these six files downloaded from OECD are more than 2GB in size.Reproduction 
 `schooling.csv`: mean year of schooling in ong format
 `nodal_time_series.csv`: merge of schooling, internet and gdp per capita datsets
 
-`attributeYEAR.csv': There are 24 files like this name. These are the time varying nodal attributes merged on the fixed attributes created for node attributes of the network objects.
-`attributes2000_2023.csv`: This is the time series node attributes data in the long format used to build the panel dataset.
-`attribute_centrality_long`: This is a csv file that contains the attribute dataset added with the network centralities of the countries over time.
+`attributeYEAR.csv': There are 21 files like this name. These are the time varying nodal attributes merged on the fixed attributes created for node attributes of the network objects.
 
 
 

@@ -1,0 +1,75 @@
+iso_o,country_x,TIME_PERIOD,LTE,internet,gdp_pct,schooling,log_gdp_pct,D_log_gdp_pct,D_internet,country_y,landlocked,continent,lat,lon,langoff_1,colonizer1,category,development
+ARG,Argentina,2009,0.0,34.0,12285.38,16.71003,9.4161654,-0.071606636,5.8999996,Argentina,0,America,-34.666668,-58.5,Spanish,ESP,Emerging and Developing Economies,0.0
+AUS,Australia,2009,0.0,74.300003,53237.012,22.26055,10.882509,-0.0018596649,2.6000061,Australia,0,Pacific,-35.299999,149.133,English,GBR,Advanced Economies,1.0
+AUT,Austria,2009,0.0,73.5,42372.48,15.86687,10.654254,-0.039141655,0.59999847,Austria,1,Europe,48.216667,16.366667,German,,Advanced Economies,1.0
+BEL,Belgium,2009,0.0,74.5,39293.641,19.16604,10.578818,-0.027294159,5.5999985,Belgium,0,Europe,50.833332,4.3499999,Dutch,,Advanced Economies,1.0
+BGD,Bangladesh,2009,0.0,3.0999999,901.72998,8.9488297,6.8043151,0.039899349,0.5999999,Bangladesh,0,Asia,23.700001,90.366669,Bengali,GBR,Emerging and Developing Economies,0.0
+BGR,Bulgaria,2009,0.0,45.0,6288.73,14.23392,8.7465143,-0.027600288,5.2999992,Bulgaria,0,Europe,42.666668,23.299999,Bulgarian,TUR,Emerging and Developing Economies,0.0
+BLR,Belarus,2009,0.0,27.4,5200.77,15.5183,8.5565624,0.0044555664,4.3999996,Belarus,0,Europe,53.849998,27.5,Belarussian,RUS,Emerging and Developing Economies,0.0
+BRA,Brazil,2009,0.0,39.200001,8246.0996,15.05658,9.0174952,-0.010214806,5.4000015,Brazil,0,America,-15.78,-47.91,Portuguese,PRT,Emerging and Developing Economies,0.0
+BRN,Brunei Darussalam,2009,0.0,49.0,32855.602,13.80313,10.399878,-0.037957191,3.0,Brunei Darussalam,0,Asia,4.9333334,114.96667,Malay,GBR,Emerging and Developing Economies,0.0
+CAN,Canada,2009,0.0,80.300003,40376.422,15.31016,10.606001,-0.041031837,3.6000061,Canada,0,America,45.419998,-75.709999,English,GBR,Advanced Economies,1.0
+CHE,Switzerland,2009,0.0,81.300003,79585.523,15.51602,11.284588,-0.035736084,2.1000061,Switzerland,1,Europe,46.950001,7.4333334,German,,Advanced Economies,1.0
+CHL,Chile,2009,0.0,41.599998,11116.41,14.88204,9.3161774,-0.021331787,4.2999992,Chile,0,America,-33.5,-70.666664,Spanish,ESP,Emerging and Developing Economies,0.0
+CHN,China,2009,0.0,28.9,5237.77,12.85253,8.5636511,0.084893227,6.2999992,China,0,Asia,39.916668,116.43333,Chinese,,Emerging and Developing Economies,0.0
+CIV,Cote d'Ivoire,2009,0.0,2.0,1473.92,7.6421399,7.295681,0.013174057,0.10000002,Côte d'Ivoire,0,Africa,5.3166666,-4.0166669,French,FRA,Emerging and Developing Economies,0.0
+CMR,Cameroon,2009,0.0,3.8399999,1290.9,10.00405,7.163095,-0.0031862259,0.43999982,Cameroon,0,Africa,3.8499999,11.516666,French,FRA,Emerging and Developing Economies,0.0
+COL,Colombia,2009,0.0,30.0,5046.9702,14.43909,8.5265436,-0.00031661987,4.3999996,Colombia,0,America,4.6333332,-75.066666,Spanish,ESP,Emerging and Developing Economies,0.0
+CRI,Costa Rica,2009,0.0,34.299999,9883.6797,13.424832,9.1986399,-0.022136688,2.0,Costa Rica,0,America,9.9833336,-84.066666,Spanish,ESP,Emerging and Developing Economies,0.0
+CYP,Cyprus,2009,0.0,49.799999,26183.689,14.0283,10.172892,-0.04720211,7.5,Cyprus,0,Europe,35.150002,33.349998,Greek,GBR,Advanced Economies,1.0
+CZE,Czechia,2009,0.0,64.400002,16272.81,15.99908,9.6972513,-0.054869652,1.4000015,Czech Republic,1,Europe,50.099998,14.433333,Czech,AUT,Advanced Economies,1.0
+DEU,Germany,2009,0.0,79.0,36927.191,16.808218,10.516704,-0.054513931,1.0,Germany,0,Europe,52.533001,13.417,German,,Advanced Economies,1.0
+DNK,Denmark,2009,0.0,86.800003,50635.91,16.71541,10.832417,-0.056375504,1.8000031,Denmark,0,Europe,55.666668,12.583333,Danish,,Advanced Economies,1.0
+EGY,"Egypt, Arab Rep.",2009,0.0,20.0,3135.1001,11.08393,8.050416,0.026794434,2.0,Egypt,0,Africa,30.049999,31.25,Arabic,GBR,Emerging and Developing Economies,0.0
+ESP,Spain,2009,0.0,62.400002,25860.811,15.95916,10.160484,-0.04726696,2.8000031,Spain,0,Europe,40.416668,-3.7166667,Spanish,,Advanced Economies,1.0
+EST,Estonia,2009,0.0,72.5,14274.85,16.3183,9.5662546,-0.15625095,1.9000015,Estonia,0,Europe,59.416668,24.75,Estonian,RUS,Advanced Economies,1.0
+FIN,Finland,2009,0.0,82.5,42412.512,16.88616,10.655199,-0.088990211,-1.1999969,Finland,0,Europe,60.133335,25.0,Swedish,RUS,Advanced Economies,1.0
+FRA,France,2009,0.0,71.599998,35052.852,15.27202,10.464612,-0.03378582,0.90000153,France,0,Europe,48.866665,2.3333333,French,,Advanced Economies,1.0
+GBR,United Kingdom,2009,0.0,83.599998,41712.828,16.221439,10.638564,-0.054870605,5.1999969,United Kingdom,0,Europe,51.5,-0.16666667,English,,Advanced Economies,1.0
+GRC,Greece,2009,0.0,42.400002,22878.131,16.573883,10.037937,-0.044694901,4.2000008,Greece,0,Europe,38.0,23.733334,Greek,TUR,Advanced Economies,1.0
+HKG,"Hong Kong SAR, China",2009,0.0,69.400002,35938.609,15.90508,10.489568,-0.027051926,2.7000046,Hong Kong SAR,0,Asia,22.266666,114.15,English,GBR,Advanced Economies,1.0
+HRV,Croatia,2009,0.0,50.599998,12099.8,14.45389,9.4009438,-0.069521904,6.3999977,Croatia,0,Europe,45.799999,15.966666,Serbo-Croatian,AUT,Advanced Economies,1.0
+HUN,Hungary,2009,0.0,62.0,11142.89,15.40419,9.3185568,-0.068231583,1.0,Hungary,1,Europe,47.5,19.049999,Hungarian,,Emerging and Developing Economies,0.0
+IDN,Indonesia,2009,0.0,6.9200001,2546.22,12.42795,7.8423653,0.032580376,-1.0,Indonesia,0,Asia,-6.1333332,106.75,Indonesian,NLD,Emerging and Developing Economies,0.0
+IND,India,2009,0.0,5.1199999,1155.1,10.78788,7.0519423,0.061216354,0.73999977,India,0,Asia,28.616667,77.216667,English,GBR,Emerging and Developing Economies,0.0
+IRL,Ireland,2009,0.0,67.400002,46514.539,17.492661,10.74752,-0.062458992,2.0999985,Ireland,0,Europe,53.333332,-6.25,English,GBR,Advanced Economies,1.0
+ISL,Iceland,2009,0.0,93.0,49527.398,17.98357,10.810282,-0.083146095,2.0,Iceland,0,Europe,64.150002,-21.966667,Icelandic,DNK,Advanced Economies,1.0
+ISR,Israel,2009,0.0,63.099998,32178.57,14.84815,10.379056,-0.011600494,3.6999969,Israel,0,Asia,32.083332,34.766666,Hebrew,GBR,Advanced Economies,1.0
+ITA,Italy,2009,0.0,48.799999,31587.061,16.281691,10.360503,-0.060307503,4.2999992,Italy,0,Europe,41.883335,12.5,Italian,,Advanced Economies,1.0
+JOR,Jordan,2009,0.0,26.0,4615.23,12.8806,8.4371166,0.027517319,3.0,Jordan,0,Asia,31.950001,35.933334,Arabic,GBR,Emerging and Developing Economies,0.0
+JPN,Japan,2009,0.0,78.0,31651.08,15.270013,10.362528,-0.058492661,2.5999985,Japan,0,Asia,35.666668,139.75,Japanese,,Advanced Economies,1.0
+KAZ,Kazakhstan,2009,0.0,18.200001,8218.4004,14.530817,9.0141306,0.00022888184,7.2000008,Kazakhstan,1,Asia,51.169998,71.470001,Kazakh,RUS,Emerging and Developing Economies,0.0
+KHM,Cambodia,2009,0.0,0.52999997,1117.26,11.065282,7.0186343,0.024178505,0.019999981,Cambodia,0,Asia,11.583333,104.91666,Khmer,FRA,Emerging and Developing Economies,0.0
+KOR,"Korea, Rep.",2009,0.0,81.599998,23952.811,16.72352,10.083841,0.0027494431,0.59999847,Korea,0,Asia,37.5,127.0,Korean,JPN,Advanced Economies,1.0
+LAO,Lao PDR,2009,0.0,6.0,1463.34,9.8305702,7.2884769,0.057378292,2.45,Lao P.D.R.,1,Asia,17.983334,102.63333,Lao,FRA,Emerging and Developing Economies,0.0
+LTU,Lithuania,2009,0.0,59.799999,10612.92,17.187571,9.2698278,-0.14951801,4.5999985,Lithuania,0,Europe,54.683334,25.316668,Lithuanian,RUS,Advanced Economies,1.0
+LUX,Luxembourg,2009,0.0,87.300003,104574.35,13.603894,11.557653,-0.0514431,5.1000061,Luxembourg,1,Europe,49.599998,6.1500001,French,NLD,Advanced Economies,1.0
+LVA,Latvia,2009,0.0,66.800003,10675.43,15.93804,9.2756996,-0.15831947,3.4000015,Latvia,0,Europe,56.950001,24.1,Latvian,RUS,Advanced Economies,1.0
+MAR,Morocco,2009,0.0,41.299999,2710.6699,10.53152,7.9049511,0.023168564,8.2000008,Morocco,0,Africa,34.033333,-6.8499999,Arabic,FRA,Emerging and Developing Economies,0.0
+MEX,Mexico,2009,0.0,26.299999,9074.1201,13.2756,9.1131821,-0.079639435,4.5999985,Mexico,0,America,19.416666,-99.166664,Spanish,ESP,Emerging and Developing Economies,0.0
+MLT,Malta,2009,0.0,58.900002,19635.881,15.227025,9.8851137,-0.021590233,8.8000031,Malta,0,Europe,35.900002,14.533334,English,GBR,Advanced Economies,1.0
+MMR,Myanmar,2009,0.0,0.22,785.63,9.1984816,6.6664858,0.094734669,0.0,Myanmar,0,Asia,16.783333,96.166664,Burmese,GBR,Emerging and Developing Economies,0.0
+MYS,Malaysia,2009,0.0,55.900002,7700.46,12.55362,8.9490356,-0.035171509,0.10000229,Malaysia,0,Asia,3.1333334,101.7,Malay,GBR,Emerging and Developing Economies,0.0
+NGA,Nigeria,2009,0.0,9.3000002,2204.6101,8.3379478,7.6983061,0.049432755,1.3000002,Nigeria,0,Africa,6.4499998,3.4666667,English,GBR,Emerging and Developing Economies,0.0
+NLD,Netherlands,2009,0.0,89.599998,44304.41,16.845591,10.698839,-0.042484283,2.1999969,The Netherlands,0,Europe,52.349998,4.9000001,Dutch,,Advanced Economies,1.0
+NOR,Norway,2009,1.0,92.099998,73141.313,17.35601,11.200149,-0.032205582,1.5,Norway,0,Europe,59.916668,10.75,Norwegian,,Advanced Economies,1.0
+NZL,New Zealand,2009,0.0,79.699997,35370.59,19.378977,10.473636,-0.010372162,7.6999969,New Zealand,0,Pacific,-44.283333,174.78334,English,GBR,Advanced Economies,1.0
+PAK,Pakistan,2009,0.0,7.5,1269.0699,6.0678701,7.1460395,0.0087213516,0.5,Pakistan,0,Asia,33.666668,73.133331,Urdu,GBR,Emerging and Developing Economies,0.0
+PER,Peru,2009,0.0,31.4,4801.1699,13.41198,8.476615,0.0047264099,0.79999924,Peru,0,America,-12.1,-77.050003,Spanish,ESP,Emerging and Developing Economies,0.0
+PHL,Philippines,2009,0.0,9.0,2256.73,11.31983,7.7216721,-0.0036358833,2.7800002,Philippines,0,Asia,14.616667,120.96667,English,ESP,Emerging and Developing Economies,0.0
+POL,Poland,2009,0.0,59.0,10446.53,15.4193,9.2540255,0.025137901,5.9000015,Poland,0,Europe,52.25,21.0,Polish,DEU,Emerging and Developing Economies,0.0
+PRT,Portugal,2009,0.0,48.299999,19371.131,15.90995,9.8715391,-0.032671928,4.2000008,Portugal,0,Europe,38.733334,-9.1333332,Portuguese,,Advanced Economies,1.0
+RUS,Russian Federation,2009,0.0,42.599998,8381.8701,14.05553,9.0338259,-0.081511497,10.599998,Russia,0,Asia,55.75,37.700001,Russian,,Emerging and Developing Economies,0.0
+SAU,Saudi Arabia,2009,0.0,38.0,20577.551,12.81766,9.9319563,-0.049872398,2.0,Saudi Arabia,0,Asia,24.65,46.766666,Arabic,,Emerging and Developing Economies,0.0
+SEN,Senegal,2009,0.0,7.5,1142.65,7.9587002,7.0411053,0.0034890175,0.38000011,Senegal,0,Africa,14.633333,-17.450001,French,FRA,Emerging and Developing Economies,0.0
+SGP,Singapore,2009,0.0,69.0,43331.871,17.799721,10.676643,-0.028881073,0.0,Singapore,0,Asia,1.2833333,103.85,English,GBR,Advanced Economies,1.0
+SVK,Slovak Republic,2009,0.0,70.0,13680.75,15.21326,9.5237446,-0.05796051,3.9000015,Slovak Republic,1,Europe,48.166668,17.166666,Slovak,HUN,Advanced Economies,1.0
+SVN,Slovenia,2009,0.0,64.0,20307.619,16.99419,9.9187517,-0.08798027,6.0,Slovenia,0,Europe,46.066666,14.5,Slovenian,AUT,Advanced Economies,1.0
+SWE,Sweden,2009,1.0,91.0,45973.551,15.79718,10.735822,-0.052006721,1.0,Sweden,0,Europe,59.333332,18.083334,Swedish,,Advanced Economies,1.0
+THA,Thailand,2009,0.0,20.1,4737.46,12.61021,8.4632568,-0.014313698,1.8999996,Thailand,0,Asia,13.733334,100.5,Thai,,Emerging and Developing Economies,0.0
+TUN,Tunisia,2009,0.0,34.099998,3835.26,13.95746,8.2519922,0.019785881,6.5999985,Tunisia,0,Africa,36.833332,10.216666,Arabic,FRA,Emerging and Developing Economies,0.0
+TUR,Turkiye,2009,0.0,36.400002,7862.8701,13.05501,8.9699068,-0.06323719,2.0,Türkiye,0,Europe,39.93,32.849998,Turkish,,Emerging and Developing Economies,0.0
+UKR,Ukraine,2009,0.0,17.9,2188.1699,15.0724,7.6908207,-0.1599412,6.8999996,Ukraine,0,Europe,50.416668,30.5,Ukrainian,RUS,Emerging and Developing Economies,0.0
+USA,United States,2009,0.0,71.0,51863.621,16.33848,10.856373,-0.034869194,-3.0,United States,0,America,38.867001,-77.0,English,GBR,Advanced Economies,1.0
+VNM,Viet Nam,2009,0.0,26.6,1927.13,12.515725,7.563787,0.037602901,2.7000008,Vietnam,0,Asia,21.016666,105.86667,Vietnamese,FRA,Emerging and Developing Economies,0.0
+ZAF,South Africa,2009,0.0,10.0,5847.0601,12.63555,8.6736946,-0.027439117,1.5699997,South Africa,0,Africa,-25.73,28.219999,English,GBR,Emerging and Developing Economies,0.0
