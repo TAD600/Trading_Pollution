@@ -6,10 +6,10 @@ output: html_document
 ---
 
 ## raw 
-# This subfolder has 13 csv files
+# This subfolder has 14 csv files
 `702e5907-a97c-4e0a-9f8f-511ea9b80ab0_Data.csv`: Internet penetration (% of people) from WDI
 `ad57150c-c77e-4bee-bb87-4174bb32e6a0_Data.csv`: GDP per capita from WDI
-
+`hdr-data.xlsx`: UNDP HDR data on mean year of schooling from 
 `geo_cepii.csv`: Country level fixed attributes from CEPII 
 `dist_cepii.csv`: Country pair level fixed attributed from CEPII
 
@@ -18,7 +18,7 @@ output: html_document
 `rta_2024028.csv`: Mario Larch's Regional Trade Agreements Database from Eggar and Larch (2008)
 https://www.ewf.uni-bayreuth.de/en/research/RTA-data/index.html
 
-`LTE.xlsx`: LTE adoptation data 
+`LTE.xlsx`: LTE adoptation data was generated from GSA report of October 13, 2015. Official materials and local newspaper reports were the source of LTE adoptation year for countries those were not present in the GSA report.
 
 `BIMTS_HS2017_2D_CSV_1995_To_2023` downloaded from [OECD BIMTS database](https://data-explorer.oecd.org/vis?fs[0]=Topic%2C1%7CTrade%23TRD%23%7CTrade%20in%20goods%20and%20services%23TRD_GDS%23&pg=0&fc=Topic&bp=true&snb=24&df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_BIMTS%40DF_BIMTS_HS2017_2D&df[ag]=OECD.SDD.TPS&df[vs]=1.0) produces,
 `HS17_2D_DE_2000_To_2004.csv`
@@ -35,7 +35,7 @@ All these six files downloaded from OECD are more than 2GB in size.Reproduction 
 
 
 ## cleaned
-# This subfolder has 20 csv files
+# This subfolder has 43 csv files
 
 `trade2000_2020.csv`: This is the cleaned dataset for total product trade produced from five csv files extracted from the bulk file (BIMTS_HS2017_2D_CSV_1995_To_2023) with the code '_T'.
 `total_edgelist.csv`: This is an edgelist created from `trade2000_2020.csv`.
