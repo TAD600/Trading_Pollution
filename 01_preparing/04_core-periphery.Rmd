@@ -1,0 +1,925 @@
+---
+title: "core_periphery"
+author: "Author"
+date: "2025-08-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(igraph)
+library(ITNr)
+```
+
+
+```{r}
+t <- read.csv("../data/cleaned/trade_edgelist.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+```
+# 2000
+```{r}
+y0 <- "X2000"   
+t_y0 <- t[, c("iso_o", "iso_d", y0)]
+# Filtering out edges with zero trade
+t_y0 <- subset(t_y0, t_y0[[y0]] > 0)
+att2000 <- read.csv("../data/cleaned/attribute2000.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot00 <- graph_from_data_frame(d = t_y0, directed = TRUE)
+E(tot00)$weight <- t_y0[[y0]]
+is_directed(tot00) 
+length(E(tot00)) == length(E(tot00)$weight)
+length(unique(V(tot00)$name)) == gorder(tot00)  
+is.character(V(tot00)$name) 
+any(is.na(E(tot00)$weight))      
+any(!is.finite(E(tot00)$weight))
+length(unique(V(tot00)$name))
+```
+
+```{r}
+attify <- function(n_net, attr_df){
+  V(n_net)$iso_o <- V(n_net)$name
+  idx <- match(V(n_net)$name, attr_df$iso_o)
+  V(n_net)$country <- attr_df$country_x[idx]
+  return(n_net)
+}
+
+tot00 <- attify(tot00, att2000)
+vertex_attr_names(tot00)
+```
+
+```{r}
+#vcount(tot00)
+#nrow(att2000)
+```
+
+```{r}
+summary(tot00)
+length(unique(V(tot00)$name)) == gorder(tot00) 
+is.character(V(tot00)$name) 
+length(unique(att2000$iso_o)) == length(unique(V(tot00)$name))
+V(tot00)$name
+
+ITNcp00 <-core_periphery_weighted(tot00,"directed")
+# This is a list of three. The second element is the dataframe containing the results.
+class(ITNcp00)
+
+length(ITNcp00)
+class(ITNcp00[[1]])
+class(ITNcp00[[2]])
+ITNcp00[[2]]
+
+#Making sure the class, the string lengths and the values of the columns to merge the dataframes are same
+cp00 <- ITNcp00[[2]]
+class(cp00$id)
+class(att2000$iso_o)
+unique(nchar(cp00$id))
+unique(nchar(att2000$iso_o))
+head(cp00$id)
+head(att2000$iso_o)
+```
+
+```{r}
+#merged00 <- merge(cp00, att2000, by.x = "id", by.y = "iso_o", all.x = TRUE)
+#merged00 <- left_join(cp00, att2000, by = "id")
+#merged00 <- subset(merged00, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, X, sigma_all.y, RANK.y, all_cp.y ))
+# renaming 
+#merged00 <- merged00 %>% rename(iso_o = id)
+merged00 <- merged00 %>% rename(sigma_cp = sigma_all.x)
+merged00 <- merged00 %>% rename(rank_cp = RANK.x)
+merged00 <- merged00 %>% rename(cp = all_cp.x)
+merged00 <- merged00 %>% rename(country = country_x)
+```
+
+```{r}
+colnames(merged00)
+```
+
+# 2001
+```{r}
+y1 <- "X2001"   
+t_y1 <- t[, c("iso_o", "iso_d", y1)]
+t_y1 <- subset(t_y1, t_y1[[y1]] > 0)
+att2001 <- read.csv("../data/cleaned/attribute2001.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot01 <- graph_from_data_frame(d = t_y1, directed = TRUE)
+E(tot01)$weight <- t_y1[[y1]]
+is_directed(tot01) 
+length(E(tot01)) == length(E(tot01)$weight)
+length(unique(V(tot01)$name)) == gorder(tot01)  
+is.character(V(tot01)$name) 
+any(is.na(E(tot01)$weight))      
+any(!is.finite(E(tot01)$weight))
+length(unique(V(tot01)$name))
+
+tot01 <- attify(tot01, att2001)
+vertex_attr_names(tot01)
+```
+
+```{r}
+
+length(unique(V(tot01)$name)) == gorder(tot01) 
+is.character(V(tot01)$name) 
+length(unique(att2001$iso_o)) == length(unique(V(tot01)$name))
+
+ITNcp01 <-core_periphery_weighted(tot01,"directed")
+class(ITNcp01[[2]])
+cp01 <- ITNcp01[[2]]
+
+#Making sure the class, the string lengths and the values of the columns to merge the dataframes are same
+class(cp01$id)
+class(att2001$iso_o)
+unique(nchar(cp01$id))
+unique(nchar(att2001$iso_o))
+head(cp01$id)
+head(att2001$iso_o)
+```
+
+```{r}
+merged01 <- merge(cp01, att2001, by.x = "id", by.y = "iso_o", all.x = TRUE)
+#merged01 <- left_join(cp01, att2001, by = "id")
+merged01 <- subset(merged01, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged01 <- merged01 %>% rename(iso_o = id)
+merged01 <- merged01 %>% rename(sigma_cp = sigma_all)
+merged01 <- merged01 %>% rename(rank_cp = RANK)
+merged01 <- merged01 %>% rename(cp = all_cp)
+merged01 <- merged01 %>% rename(country = country_x)
+```
+
+```{r}
+colnames(merged01)
+```
+# 2002
+```{r}
+y2 <- "X2002"   
+t_y2 <- t[, c("iso_o", "iso_d", y2)]
+t_y2 <- subset(t_y2, t_y2[[y2]] > 0)
+att2002 <- read.csv("../data/cleaned/attribute2002.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot02 <- graph_from_data_frame(d = t_y2, directed = TRUE)
+E(tot02)$weight <- t_y2[[y2]]
+is_directed(tot02) 
+length(E(tot02)) == length(E(tot02)$weight)
+length(unique(V(tot02)$name)) == gorder(tot02)  
+is.character(V(tot02)$name) 
+any(is.na(E(tot02)$weight))      
+any(!is.finite(E(tot02)$weight))
+length(unique(V(tot02)$name))
+
+tot02 <- attify(tot02, att2002)
+vertex_attr_names(tot02)
+```
+
+```{r}
+length(unique(V(tot02)$name)) == gorder(tot02) 
+is.character(V(tot02)$name) 
+length(unique(att2002$iso_o)) == length(unique(V(tot02)$name))
+
+ITNcp02 <-core_periphery_weighted(tot02,"directed")
+class(ITNcp02[[2]])
+cp02 <- ITNcp02[[2]]
+```
+```{r}
+merged02 <- merge(cp02, att2002, by.x = "id", by.y = "iso_o", all.x = TRUE)
+#merged01 <- left_join(cp01, att2001, by = "id")
+merged02 <- subset(merged02, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged02 <- merged02 %>% rename(iso_o = id)
+merged02 <- merged02 %>% rename(sigma_cp = sigma_all)
+merged02 <- merged02 %>% rename(rank_cp = RANK)
+merged02 <- merged02 %>% rename(cp = all_cp)
+merged02 <- merged02 %>% rename(country = country_x)
+```
+
+# 2003
+```{r}
+y3 <- "X2003"   
+t_y3 <- t[, c("iso_o", "iso_d", y3)]
+t_y3 <- subset(t_y3, t_y3[[y3]] > 0)
+att2003 <- read.csv("../data/cleaned/attribute2003.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot03 <- graph_from_data_frame(d = t_y3, directed = TRUE)
+E(tot03)$weight <- t_y3[[y3]]
+is_directed(tot03) 
+length(E(tot03)) == length(E(tot03)$weight)
+length(unique(V(tot03)$name)) == gorder(tot03)  
+is.character(V(tot03)$name) 
+any(is.na(E(tot03)$weight))      
+any(!is.finite(E(tot03)$weight))
+length(unique(V(tot03)$name))
+
+tot03 <- attify(tot03, att2003)
+vertex_attr_names(tot03)
+```
+
+
+```{r}
+length(unique(V(tot03)$name)) == gorder(tot03) 
+is.character(V(tot03)$name) 
+length(unique(att2003$iso_o)) == length(unique(V(tot03)$name))
+ITNcp03 <-core_periphery_weighted(tot03,"directed")
+class(ITNcp03[[2]])
+cp03 <- ITNcp03[[2]]
+```
+```{r}
+merged03 <- merge(cp03, att2003, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged03 <- subset(merged03, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged03 <- merged03 %>% rename(iso_o = id)
+merged03 <- merged03 %>% rename(sigma_cp = sigma_all)
+merged03 <- merged03 %>% rename(rank_cp = RANK)
+merged03 <- merged03 %>% rename(cp = all_cp)
+merged03 <- merged03 %>% rename(country = country_x)
+```
+
+
+
+# 2004
+```{r}
+y4 <- "X2004"   
+t_y4 <- t[, c("iso_o", "iso_d", y4)]
+t_y4 <- subset(t_y4, t_y4[[y4]] > 0)
+att2004 <- read.csv("../data/cleaned/attribute2004.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot04 <- graph_from_data_frame(d = t_y4, directed = TRUE)
+E(tot04)$weight <- t_y4[[y4]]
+is_directed(tot04) 
+length(E(tot04)) == length(E(tot04)$weight)
+length(unique(V(tot04)$name)) == gorder(tot04) 
+is.character(V(tot04)$name) 
+any(is.na(E(tot04)$weight))      
+any(!is.finite(E(tot04)$weight)) 
+length(unique(V(tot04)$name))
+tot04 <- attify(tot04, att2004)
+vertex_attr_names(tot04)
+```
+```{r}
+length(unique(V(tot04)$name)) == gorder(tot04) 
+is.character(V(tot04)$name) 
+length(unique(att2004$iso_o)) == length(unique(V(tot04)$name))
+ITNcp04 <-core_periphery_weighted(tot04,"directed")
+class(ITNcp04[[2]])
+cp04 <- ITNcp04[[2]]
+```
+```{r}
+merged04 <- merge(cp04, att2004, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged04 <- subset(merged04, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged04 <- merged04 %>% rename(iso_o = id)
+merged04 <- merged04 %>% rename(sigma_cp = sigma_all)
+merged04 <- merged04 %>% rename(rank_cp = RANK)
+merged04 <- merged04 %>% rename(cp = all_cp)
+merged04 <- merged04 %>% rename(country = country_x)
+```
+
+# 2005
+```{r}
+y5 <- "X2005"   
+t_y5 <- t[, c("iso_o", "iso_d", y5)]
+t_y5 <- subset(t_y5, t_y5[[y5]] > 0)
+att2005 <- read.csv("../data/cleaned/attribute2005.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot05 <- graph_from_data_frame(d = t_y5, directed = TRUE)
+E(tot05)$weight <- t_y5[[y5]]
+is_directed(tot05) 
+length(E(tot05)) == length(E(tot05)$weight)
+length(unique(V(tot05)$name)) == gorder(tot05)  
+is.character(V(tot05)$name) 
+any(is.na(E(tot05)$weight))      
+any(!is.finite(E(tot05)$weight)) 
+length(unique(V(tot05)$name))
+tot05 <- attify(tot05, att2005)
+vertex_attr_names(tot05)
+```
+
+```{r}
+length(unique(V(tot05)$name)) == gorder(tot05) 
+is.character(V(tot05)$name) 
+length(unique(att2005$iso_o)) == length(unique(V(tot05)$name))
+ITNcp05 <-core_periphery_weighted(tot05,"directed")
+class(ITNcp05[[2]])
+cp05 <- ITNcp05[[2]]
+```
+
+```{r}
+merged05 <- merge(cp05, att2005, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged05 <- subset(merged05, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged05 <- merged05 %>% rename(iso_o = id)
+merged05 <- merged05 %>% rename(sigma_cp = sigma_all)
+merged05 <- merged05 %>% rename(rank_cp = RANK)
+merged05 <- merged05 %>% rename(cp = all_cp)
+merged05 <- merged05 %>% rename(country = country_x)
+```
+
+# 2006
+```{r}
+y6 <- "X2006"   
+t_y6 <- t[, c("iso_o", "iso_d", y6)]
+t_y6 <- subset(t_y6, t_y6[[y6]] > 0)
+att2006 <- read.csv("../data/cleaned/attribute2006.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot06 <- graph_from_data_frame(d = t_y6, directed = TRUE)
+E(tot06)$weight <- t_y6[[y6]]
+is_directed(tot06) 
+length(E(tot06)) == length(E(tot06)$weight)
+length(unique(V(tot06)$name)) == gorder(tot06)  
+is.character(V(tot06)$name) 
+any(is.na(E(tot06)$weight))    
+any(!is.finite(E(tot06)$weight))
+length(unique(V(tot06)$name))
+tot06 <- attify(tot06, att2006)
+vertex_attr_names(tot06)
+```
+
+```{r}
+length(unique(V(tot06)$name)) == gorder(tot06) 
+is.character(V(tot06)$name) 
+length(unique(att2006$iso_o)) == length(unique(V(tot06)$name))
+ITNcp06 <-core_periphery_weighted(tot06,"directed")
+class(ITNcp06[[2]])
+cp06 <- ITNcp06[[2]]
+```
+
+```{r}
+merged06 <- merge(cp06, att2006, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged06 <- subset(merged06, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged06 <- merged06 %>% rename(iso_o = id)
+merged06 <- merged06 %>% rename(sigma_cp = sigma_all)
+merged06 <- merged06 %>% rename(rank_cp = RANK)
+merged06 <- merged06 %>% rename(cp = all_cp)
+merged06 <- merged06 %>% rename(country = country_x)
+```
+
+# 2007
+```{r}
+y7 <- "X2007"   
+t_y7 <- t[, c("iso_o", "iso_d", y7)]
+t_y7 <- subset(t_y7, t_y7[[y7]] > 0)
+att2007 <- read.csv("../data/cleaned/attribute2007.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot07 <- graph_from_data_frame(d = t_y7, directed = TRUE)
+E(tot07)$weight <- t_y7[[y7]]
+is_directed(tot07) 
+length(E(tot07)) == length(E(tot07)$weight)
+length(unique(V(tot07)$name)) == gorder(tot07)  
+is.character(V(tot07)$name) 
+any(is.na(E(tot07)$weight))      
+any(!is.finite(E(tot07)$weight)) 
+length(unique(V(tot07)$name))
+tot07 <- attify(tot07, att2007)
+vertex_attr_names(tot07)
+```
+```{r}
+length(unique(V(tot07)$name)) == gorder(tot07) 
+is.character(V(tot07)$name) 
+length(unique(att2007$iso_o)) == length(unique(V(tot07)$name))
+ITNcp07 <-core_periphery_weighted(tot07,"directed")
+class(ITNcp07[[2]])
+cp07 <- ITNcp07[[2]]
+```
+```{r}
+merged07 <- merge(cp07, att2007, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged07 <- subset(merged07, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged07 <- merged07 %>% rename(iso_o = id)
+merged07 <- merged07 %>% rename(sigma_cp = sigma_all)
+merged07 <- merged07 %>% rename(rank_cp = RANK)
+merged07 <- merged07 %>% rename(cp = all_cp)
+merged07 <- merged07 %>% rename(country = country_x)
+```
+
+
+# 2008
+```{r}
+y8 <- "X2008"   
+t_y8 <- t[, c("iso_o", "iso_d", y8)]
+t_y8 <- subset(t_y8, t_y8[[y8]] > 0)
+att2008 <- read.csv("../data/cleaned/attribute2008.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot08 <- graph_from_data_frame(d = t_y8, directed = TRUE)
+E(tot08)$weight <- t_y8[[y8]]
+is_directed(tot08) 
+length(E(tot08)) == length(E(tot08)$weight)
+length(unique(V(tot08)$name)) == gorder(tot08)  
+is.character(V(tot08)$name) 
+any(is.na(E(tot08)$weight))      
+any(!is.finite(E(tot08)$weight)) 
+length(unique(V(tot08)$name))
+tot08 <- attify(tot08, att2008)
+vertex_attr_names(tot08)
+```
+```{r}
+length(unique(V(tot08)$name)) == gorder(tot08) 
+is.character(V(tot08)$name) 
+length(unique(att2008$iso_o)) == length(unique(V(tot08)$name))
+ITNcp08 <-core_periphery_weighted(tot08,"directed")
+class(ITNcp08[[2]])
+cp08 <- ITNcp08[[2]]
+```
+```{r}
+merged08 <- merge(cp08, att2008, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged08 <- subset(merged08, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged08 <- merged08 %>% rename(iso_o = id)
+merged08 <- merged08 %>% rename(sigma_cp = sigma_all)
+merged08 <- merged08 %>% rename(rank_cp = RANK)
+merged08 <- merged08 %>% rename(cp = all_cp)
+merged08 <- merged08 %>% rename(country = country_x)
+```
+
+# 2009
+```{r}
+y9 <- "X2009"   
+t_y9 <- t[, c("iso_o", "iso_d", y9)]
+t_y9 <- subset(t_y9, t_y9[[y9]] > 0)
+att2009 <- read.csv("../data/cleaned/attribute2009.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot09 <- graph_from_data_frame(d = t_y9, directed = TRUE)
+E(tot09)$weight <- t_y9[[y9]]
+is_directed(tot09) 
+length(E(tot09)) == length(E(tot09)$weight)
+length(unique(V(tot09)$name)) == gorder(tot09)  
+is.character(V(tot09)$name) 
+any(is.na(E(tot09)$weight))      
+any(!is.finite(E(tot09)$weight)) 
+length(unique(V(tot09)$name))
+tot09 <- attify(tot09, att2009)
+vertex_attr_names(tot09)
+```
+```{r}
+length(unique(V(tot09)$name)) == gorder(tot09) 
+is.character(V(tot09)$name) 
+length(unique(att2009$iso_o)) == length(unique(V(tot09)$name))
+ITNcp09 <-core_periphery_weighted(tot09,"directed")
+class(ITNcp09[[2]])
+cp09 <- ITNcp09[[2]]
+```
+```{r}
+merged09 <- merge(cp09, att2009, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged09 <- subset(merged09, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged09 <- merged09 %>% rename(iso_o = id)
+merged09 <- merged09 %>% rename(sigma_cp = sigma_all)
+merged09 <- merged09 %>% rename(rank_cp = RANK)
+merged09 <- merged09 %>% rename(cp = all_cp)
+merged09 <- merged09 %>% rename(country = country_x)
+```
+
+# 2010
+```{r}
+y10 <- "X2010"   
+t_y10 <- t[, c("iso_o", "iso_d", y10)]
+t_y10 <- subset(t_y10, t_y10[[y10]] > 0)
+att2010 <- read.csv("../data/cleaned/attribute2010.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot10 <- graph_from_data_frame(d = t_y10, directed = TRUE)
+E(tot10)$weight <- t_y10[[y10]]
+is_directed(tot10) 
+length(E(tot10)) == length(E(tot10)$weight)
+length(unique(V(tot10)$name)) == gorder(tot10)  
+is.character(V(tot10)$name) 
+any(is.na(E(tot10)$weight))      
+any(!is.finite(E(tot10)$weight)) 
+length(unique(V(tot10)$name))
+tot10 <- attify(tot10, att2010)
+vertex_attr_names(tot10)
+```
+```{r}
+length(unique(V(tot10)$name)) == gorder(tot10) 
+is.character(V(tot10)$name) 
+length(unique(att2010$iso_o)) == length(unique(V(tot10)$name))
+ITNcp10 <-core_periphery_weighted(tot10,"directed")
+class(ITNcp10[[2]])
+cp10 <- ITNcp10[[2]]
+```
+
+```{r}
+merged10 <- merge(cp10, att2010, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged10 <- subset(merged10, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged10 <- merged10 %>% rename(iso_o = id)
+merged10 <- merged10 %>% rename(sigma_cp = sigma_all)
+merged10 <- merged10 %>% rename(rank_cp = RANK)
+merged10 <- merged10 %>% rename(cp = all_cp)
+merged10 <- merged10 %>% rename(country = country_x)
+```
+
+# 2011
+```{r}
+y11 <- "X2011"   
+t_y11 <- t[, c("iso_o", "iso_d", y11)]
+t_y11 <- subset(t_y11, t_y11[[y11]] > 0)
+att2011 <- read.csv("../data/cleaned/attribute2011.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot11 <- graph_from_data_frame(d = t_y11, directed = TRUE)
+E(tot11)$weight <- t_y11[[y11]]
+is_directed(tot11) 
+length(E(tot11)) == length(E(tot11)$weight)
+length(unique(V(tot11)$name)) == gorder(tot11)  
+is.character(V(tot11)$name) 
+any(is.na(E(tot11)$weight))      
+any(!is.finite(E(tot11)$weight))
+length(unique(V(tot11)$name))
+tot11 <- attify(tot11, att2011)
+vertex_attr_names(tot11)
+```
+```{r}
+length(unique(V(tot11)$name)) == gorder(tot11) 
+is.character(V(tot11)$name) 
+length(unique(att2011$iso_o)) == length(unique(V(tot11)$name))
+ITNcp11 <-core_periphery_weighted(tot11,"directed")
+class(ITNcp11[[2]])
+cp11 <- ITNcp11[[2]]
+```
+```{r}
+merged11 <- merge(cp11, att2011, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged11 <- subset(merged11, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged11 <- merged11 %>% rename(iso_o = id)
+merged11 <- merged11 %>% rename(sigma_cp = sigma_all)
+merged11 <- merged11 %>% rename(rank_cp = RANK)
+merged11 <- merged11 %>% rename(cp = all_cp)
+merged11 <- merged11 %>% rename(country = country_x)
+```
+
+# 2012
+```{r}
+y12 <- "X2012"   
+t_y12 <- t[, c("iso_o", "iso_d", y12)]
+t_y12 <- subset(t_y12, t_y12[[y12]] > 0)
+att2012 <- read.csv("../data/cleaned/attribute2012.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot12 <- graph_from_data_frame(d = t_y12, directed = TRUE)
+E(tot12)$weight <- t_y12[[y12]]
+is_directed(tot12) 
+length(E(tot12)) == length(E(tot12)$weight)
+length(unique(V(tot12)$name)) == gorder(tot12)  
+is.character(V(tot12)$name) 
+any(is.na(E(tot12)$weight))      
+any(!is.finite(E(tot12)$weight)) 
+length(unique(V(tot12)$name))
+tot12 <- attify(tot12, att2012)
+vertex_attr_names(tot12)
+```
+```{r}
+length(unique(V(tot12)$name)) == gorder(tot12) 
+is.character(V(tot12)$name) 
+length(unique(att2012$iso_o)) == length(unique(V(tot12)$name))
+ITNcp12 <-core_periphery_weighted(tot12,"directed")
+class(ITNcp12[[2]])
+cp12 <- ITNcp12[[2]]
+```
+```{r}
+merged12 <- merge(cp12, att2012, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged12 <- subset(merged12, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged12 <- merged12 %>% rename(iso_o = id)
+merged12 <- merged12 %>% rename(sigma_cp = sigma_all)
+merged12 <- merged12 %>% rename(rank_cp = RANK)
+merged12 <- merged12 %>% rename(cp = all_cp)
+merged12 <- merged12 %>% rename(country = country_x)
+```
+
+# 2013
+```{r}
+y13 <- "X2013"   
+t_y13 <- t[, c("iso_o", "iso_d", y13)]
+t_y13 <- subset(t_y13, t_y13[[y13]] > 0)
+att2013 <- read.csv("../data/cleaned/attribute2013.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot13 <- graph_from_data_frame(d = t_y13, directed = TRUE)
+E(tot13)$weight <- t_y13[[y13]]
+is_directed(tot13) 
+length(E(tot13)) == length(E(tot13)$weight)
+length(unique(V(tot13)$name)) == gorder(tot13)  
+is.character(V(tot13)$name) 
+any(is.na(E(tot13)$weight))      
+any(!is.finite(E(tot13)$weight)) 
+length(unique(V(tot13)$name))
+tot13 <- attify(tot13, att2013)
+vertex_attr_names(tot13)
+```
+```{r}
+length(unique(V(tot13)$name)) == gorder(tot13) 
+is.character(V(tot13)$name) 
+length(unique(att2013$iso_o)) == length(unique(V(tot13)$name))
+ITNcp13 <-core_periphery_weighted(tot13,"directed")
+class(ITNcp13[[2]])
+cp13 <- ITNcp13[[2]]
+```
+
+```{r}
+merged13 <- merge(cp13, att2013, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged13 <- subset(merged13, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged13 <- merged13 %>% rename(iso_o = id)
+merged13 <- merged13 %>% rename(sigma_cp = sigma_all)
+merged13 <- merged13 %>% rename(rank_cp = RANK)
+merged13 <- merged13 %>% rename(cp = all_cp)
+merged13 <- merged13 %>% rename(country = country_x)
+```
+
+# 2014
+```{r}
+y14 <- "X2014"   
+t_y14 <- t[, c("iso_o", "iso_d", y14)]
+t_y14 <- subset(t_y14, t_y14[[y14]] > 0)
+att2014 <- read.csv("../data/cleaned/attribute2014.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot14 <- graph_from_data_frame(d = t_y14, directed = TRUE)
+E(tot14)$weight <- t_y14[[y14]]
+is_directed(tot14) 
+length(E(tot14)) == length(E(tot14)$weight)
+length(unique(V(tot14)$name)) == gorder(tot14)  
+is.character(V(tot14)$name) 
+any(is.na(E(tot14)$weight))      
+any(!is.finite(E(tot14)$weight)) 
+length(unique(V(tot14)$name))
+tot14 <- attify(tot14, att2014)
+vertex_attr_names(tot14)
+```
+
+```{r}
+length(unique(V(tot14)$name)) == gorder(tot14) 
+is.character(V(tot14)$name) 
+length(unique(att2014$iso_o)) == length(unique(V(tot14)$name))
+ITNcp14 <-core_periphery_weighted(tot14,"directed")
+class(ITNcp14[[2]])
+cp14 <- ITNcp14[[2]]
+```
+
+```{r}
+merged14 <- merge(cp14, att2014, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged14 <- subset(merged14, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged14 <- merged14 %>% rename(iso_o = id)
+merged14 <- merged14 %>% rename(sigma_cp = sigma_all)
+merged14 <- merged14 %>% rename(rank_cp = RANK)
+merged14 <- merged14 %>% rename(cp = all_cp)
+merged14 <- merged14 %>% rename(country = country_x)
+```
+
+
+# 2015
+```{r}
+y15 <- "X2015"   
+t_y15 <- t[, c("iso_o", "iso_d", y15)]
+t_y15 <- subset(t_y15, t_y15[[y15]] > 0)
+att2015 <- read.csv("../data/cleaned/attribute2015.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot15 <- graph_from_data_frame(d = t_y15, directed = TRUE)
+E(tot15)$weight <- t_y15[[y15]]
+is_directed(tot15) 
+length(E(tot15)) == length(E(tot15)$weight)
+length(unique(V(tot15)$name)) == gorder(tot15)  
+is.character(V(tot15)$name) 
+any(is.na(E(tot15)$weight))      
+any(!is.finite(E(tot15)$weight)) 
+length(unique(V(tot15)$name))
+tot15 <- attify(tot15, att2015)
+vertex_attr_names(tot15)
+```
+```{r}
+length(unique(V(tot15)$name)) == gorder(tot15) 
+is.character(V(tot15)$name) 
+length(unique(att2015$iso_o)) == length(unique(V(tot15)$name))
+ITNcp15 <-core_periphery_weighted(tot15,"directed")
+class(ITNcp15[[2]])
+cp15 <- ITNcp15[[2]]
+```
+```{r}
+merged15 <- merge(cp15, att2015, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged15 <- subset(merged15, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged15 <- merged15 %>% rename(iso_o = id)
+merged15 <- merged15 %>% rename(sigma_cp = sigma_all)
+merged15 <- merged15 %>% rename(rank_cp = RANK)
+merged15 <- merged15 %>% rename(cp = all_cp)
+merged15 <- merged15 %>% rename(country = country_x)
+```
+
+
+# 2016
+```{r}
+y16 <- "X2016"   
+t_y16 <- t[, c("iso_o", "iso_d", y16)]
+t_y16 <- subset(t_y16, t_y16[[y16]] > 0)
+att2016 <- read.csv("../data/cleaned/attribute2016.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot16 <- graph_from_data_frame(d = t_y16, directed = TRUE)
+E(tot16)$weight <- t_y16[[y16]]
+is_directed(tot16) 
+length(E(tot16)) == length(E(tot16)$weight)
+length(unique(V(tot16)$name)) == gorder(tot16)  
+is.character(V(tot16)$name) 
+any(is.na(E(tot16)$weight))      
+any(!is.finite(E(tot16)$weight)) 
+length(unique(V(tot16)$name))
+tot16 <- attify(tot16, att2016)
+vertex_attr_names(tot16)
+```
+```{r}
+length(unique(V(tot16)$name)) == gorder(tot16) 
+is.character(V(tot16)$name) 
+length(unique(att2016$iso_o)) == length(unique(V(tot16)$name))
+ITNcp16 <-core_periphery_weighted(tot16,"directed")
+class(ITNcp16[[2]])
+cp16 <- ITNcp16[[2]]
+```
+
+```{r}
+merged16 <- merge(cp16, att2016, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged16 <- subset(merged16, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged16 <- merged16 %>% rename(iso_o = id)
+merged16 <- merged16 %>% rename(sigma_cp = sigma_all)
+merged16 <- merged16 %>% rename(rank_cp = RANK)
+merged16 <- merged16 %>% rename(cp = all_cp)
+merged16 <- merged16 %>% rename(country = country_x)
+```
+
+# 2017
+```{r}
+y17 <- "X2017"   
+t_y17 <- t[, c("iso_o", "iso_d", y17)]
+t_y17 <- subset(t_y17, t_y17[[y17]] > 0)
+att2017 <- read.csv("../data/cleaned/attribute2017.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot17 <- graph_from_data_frame(d = t_y17, directed = TRUE)
+E(tot17)$weight <- t_y17[[y17]]
+is_directed(tot17) 
+length(E(tot17)) == length(E(tot17)$weight)
+length(unique(V(tot17)$name)) == gorder(tot17)  
+is.character(V(tot17)$name) 
+any(is.na(E(tot17)$weight))     
+any(!is.finite(E(tot17)$weight))
+length(unique(V(tot17)$name))
+tot17 <- attify(tot17, att2017)
+vertex_attr_names(tot17)
+```
+
+```{r}
+length(unique(V(tot17)$name)) == gorder(tot17) 
+is.character(V(tot17)$name) 
+length(unique(att2017$iso_o)) == length(unique(V(tot17)$name))
+ITNcp17 <-core_periphery_weighted(tot17,"directed")
+class(ITNcp17[[2]])
+cp17 <- ITNcp17[[2]]
+```
+
+```{r}
+merged17 <- merge(cp17, att2017, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged17 <- subset(merged17, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged17 <- merged17 %>% rename(iso_o = id)
+merged17 <- merged17 %>% rename(sigma_cp = sigma_all)
+merged17 <- merged17 %>% rename(rank_cp = RANK)
+merged17 <- merged17 %>% rename(cp = all_cp)
+merged17 <- merged17 %>% rename(country = country_x)
+```
+
+#2018
+```{r}
+y18 <- "X2018"   
+t_y18 <- t[, c("iso_o", "iso_d", y18)]
+t_y18 <- subset(t_y18, t_y18[[y18]] > 0)
+att2018 <- read.csv("../data/cleaned/attribute2018.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot18 <- graph_from_data_frame(d = t_y18, directed = TRUE)
+E(tot18)$weight <- t_y18[[y18]]
+is_directed(tot18) 
+length(E(tot18)) == length(E(tot18)$weight)
+length(unique(V(tot18)$name)) == gorder(tot18)  
+is.character(V(tot18)$name) 
+any(is.na(E(tot18)$weight))      
+any(!is.finite(E(tot18)$weight))
+length(unique(V(tot18)$name))
+tot18 <- attify(tot18, att2018)
+vertex_attr_names(tot18)
+```
+
+```{r}
+length(unique(V(tot18)$name)) == gorder(tot18) 
+is.character(V(tot18)$name) 
+length(unique(att2018$iso_o)) == length(unique(V(tot18)$name))
+ITNcp18 <-core_periphery_weighted(tot18,"directed")
+class(ITNcp18[[2]])
+cp18 <- ITNcp18[[2]]
+```
+
+```{r}
+merged18 <- merge(cp18, att2018, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged18 <- subset(merged18, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged18 <- merged18 %>% rename(iso_o = id)
+merged18 <- merged18 %>% rename(sigma_cp = sigma_all)
+merged18 <- merged18 %>% rename(rank_cp = RANK)
+merged18 <- merged18 %>% rename(cp = all_cp)
+merged18 <- merged18 %>% rename(country = country_x)
+```
+
+# 2019
+```{r}
+y19 <- "X2019"   
+t_y19 <- t[, c("iso_o", "iso_d", y19)]
+t_y19 <- subset(t_y19, t_y19[[y19]] > 0)
+att2019 <- read.csv("../data/cleaned/attribute2019.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot19 <- graph_from_data_frame(d = t_y19, directed = TRUE)
+E(tot19)$weight <- t_y19[[y19]]
+is_directed(tot19) 
+length(E(tot19)) == length(E(tot19)$weight)
+length(unique(V(tot19)$name)) == gorder(tot19)  
+is.character(V(tot19)$name) 
+any(is.na(E(tot19)$weight))      
+any(!is.finite(E(tot19)$weight)) 
+length(unique(V(tot19)$name))
+tot19 <- attify(tot19, att2019)
+vertex_attr_names(tot19)
+```
+```{r}
+length(unique(V(tot19)$name)) == gorder(tot19) 
+is.character(V(tot19)$name) 
+length(unique(att2019$iso_o)) == length(unique(V(tot19)$name))
+ITNcp19 <-core_periphery_weighted(tot19,"directed")
+class(ITNcp19[[2]])
+cp19 <- ITNcp19[[2]]
+```
+```{r}
+merged19 <- merge(cp19, att2019, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged19 <- subset(merged19, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged19 <- merged19 %>% rename(iso_o = id)
+merged19 <- merged19 %>% rename(sigma_cp = sigma_all)
+merged19 <- merged19 %>% rename(rank_cp = RANK)
+merged19 <- merged19 %>% rename(cp = all_cp)
+merged19 <- merged19 %>% rename(country = country_x)
+```
+
+# 2020
+```{r}
+y20 <- "X2020"   
+t_y20 <- t[, c("iso_o", "iso_d", y20)]
+t_y20 <- subset(t_y20, t_y20[[y20]] > 0)
+att2020 <- read.csv("../data/cleaned/attribute2020.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+tot20 <- graph_from_data_frame(d = t_y20, directed = TRUE)
+E(tot20)$weight <- t_y20[[y20]]
+is_directed(tot20) 
+length(E(tot20)) == length(E(tot20)$weight)
+length(unique(V(tot20)$name)) == gorder(tot20)  
+is.character(V(tot20)$name) 
+any(is.na(E(tot20)$weight))     
+any(!is.finite(E(tot20)$weight)) 
+length(unique(V(tot20)$name))
+tot20 <- attify(tot20, att2020)
+vertex_attr_names(tot20)
+```
+```{r}
+length(unique(V(tot20)$name)) == gorder(tot20) 
+is.character(V(tot20)$name) 
+length(unique(att2020$iso_o)) == length(unique(V(tot20)$name))
+ITNcp20 <-core_periphery_weighted(tot20,"directed")
+class(ITNcp20[[2]])
+cp20 <- ITNcp20[[2]]
+```
+```{r}
+merged20 <- merge(cp20, att2020, by.x = "id", by.y = "iso_o", all.x = TRUE)
+merged20 <- subset(merged20, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
+# renaming 
+merged20 <- merged20 %>% rename(iso_o = id)
+merged20 <- merged20 %>% rename(sigma_cp = sigma_all)
+merged20 <- merged20 %>% rename(rank_cp = RANK)
+merged20 <- merged20 %>% rename(cp = all_cp)
+merged20 <- merged20 %>% rename(country = country_x)
+```
+
+
+```{r}
+colnames(merged00) == colnames(merged01) 
+colnames(merged01) == colnames(merged02)
+colnames(merged02) == colnames(merged03)
+colnames(merged03) == colnames(merged04)
+colnames(merged05) == colnames(merged06)
+colnames(merged06) == colnames(merged07) 
+colnames(merged07) == colnames(merged08)
+colnames(merged08) == colnames(merged09)
+colnames(merged10) == colnames(merged11)
+colnames(merged11) == colnames(merged12)
+colnames(merged12) == colnames(merged13) 
+colnames(merged13) == colnames(merged14)
+colnames(merged14) == colnames(merged15)
+colnames(merged15) == colnames(merged16)
+colnames(merged16) == colnames(merged17)
+colnames(merged17) == colnames(merged18)
+colnames(merged18) == colnames(merged19)
+colnames(merged19) == colnames(merged20)
+```
+
+```{r}
+write.csv(merged00, "../data/cleaned/attribute2000.csv")
+write.csv(merged01, "../data/cleaned/attribute2001.csv")
+write.csv(merged02, "../data/cleaned/attribute2002.csv")
+write.csv(merged03, "../data/cleaned/attribute2003.csv")
+write.csv(merged04, "../data/cleaned/attribute2004.csv")
+write.csv(merged05, "../data/cleaned/attribute2005.csv")
+write.csv(merged06, "../data/cleaned/attribute2006.csv")
+write.csv(merged07, "../data/cleaned/attribute2007.csv")
+write.csv(merged08, "../data/cleaned/attribute2008.csv")
+write.csv(merged09, "../data/cleaned/attribute2009.csv")
+write.csv(merged10, "../data/cleaned/attribute2010.csv")
+write.csv(merged11, "../data/cleaned/attribute2011.csv")
+write.csv(merged12, "../data/cleaned/attribute2012.csv")
+write.csv(merged13, "../data/cleaned/attribute2013.csv")
+write.csv(merged14, "../data/cleaned/attribute2014.csv")
+write.csv(merged15, "../data/cleaned/attribute2015.csv")
+write.csv(merged16, "../data/cleaned/attribute2016.csv")
+write.csv(merged17, "../data/cleaned/attribute2017.csv")
+write.csv(merged18, "../data/cleaned/attribute2018.csv")
+write.csv(merged19, "../data/cleaned/attribute2019.csv")
+write.csv(merged20, "../data/cleaned/attribute2020.csv")
+```
+
