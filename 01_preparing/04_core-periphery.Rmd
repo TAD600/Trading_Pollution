@@ -9,6 +9,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+This file splits each year's global trade network into core and periphery and adds a binary variable for core-periphery to the attributeYEAR datasets. 
+
+Steps: 
+1. It reads the edgelist for total trade. Then for every time period it goes through the following steps,
+   a. Creates a weighted directed igraph objects and adds vertex attributes from attribute data
+   b. Splits core-periphery on the igraph object
+   c. Makes a dataframe of the core-periphery output and merges it with the attribute data of that year 
+   d. Removes the unrelevant columns and replaces the attribute csv file in the `cleaned` subfolder with the merged data
+
 ```{r}
 library(igraph)
 library(ITNr)
