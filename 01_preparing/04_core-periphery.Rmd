@@ -16,7 +16,7 @@ Steps:
    a. Creates a weighted directed igraph objects and adds vertex attributes from attribute data
    b. Splits core-periphery on the igraph object
    c. Makes a dataframe of the core-periphery output and merges it with the attribute data of that year 
-   d. Removes the unrelevant columns and replaces the attribute csv file in the `cleaned` subfolder with the merged data
+   d. Replaces the attribute csv file in the `cleaned` subfolder with the merged data
 
 ```{r}
 library(igraph)
