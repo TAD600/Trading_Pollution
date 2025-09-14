@@ -21,6 +21,7 @@ Steps:
 ```{r}
 library(igraph)
 library(ITNr)
+library(dplyr)
 ```
 
 
@@ -31,10 +32,10 @@ t <- read.csv("../data/cleaned/trade_edgelist.csv", header = TRUE, as.is = TRUE,
 ```{r}
 y0 <- "X2000"   
 t_y0 <- t[, c("iso_o", "iso_d", y0)]
-# Filtering out edges with zero trade
 t_y0 <- subset(t_y0, t_y0[[y0]] > 0)
 att2000 <- read.csv("../data/cleaned/attribute2000.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
 tot00 <- graph_from_data_frame(d = t_y0, directed = TRUE)
+
 E(tot00)$weight <- t_y0[[y0]]
 is_directed(tot00) 
 length(E(tot00)) == length(E(tot00)$weight)
@@ -49,15 +50,17 @@ length(unique(V(tot00)$name))
 attify <- function(n_net, attr_df){
   V(n_net)$iso_o <- V(n_net)$name
   idx <- match(V(n_net)$name, attr_df$iso_o)
-  V(n_net)$country <- attr_df$country_x[idx]
+  V(n_net)$country <- attr_df$country[idx]
+  V(n_net)$continent <- attr_df$continent[idx]
+  V(n_net)$development <- attr_df$development[idx]
   return(n_net)
 }
 
 tot00 <- attify(tot00, att2000)
 vertex_attr_names(tot00)
 ```
-
 ```{r}
+#colnames(att2000)
 #vcount(tot00)
 #nrow(att2000)
 ```
@@ -84,25 +87,11 @@ class(cp00$id)
 class(att2000$iso_o)
 unique(nchar(cp00$id))
 unique(nchar(att2000$iso_o))
-head(cp00$id)
-head(att2000$iso_o)
+merged00 <- merge(cp00, att2000, by.x = "id", by.y = "iso_o", all.x = TRUE)
+head(merged00$id)
 ```
 
-```{r}
-#merged00 <- merge(cp00, att2000, by.x = "id", by.y = "iso_o", all.x = TRUE)
-#merged00 <- left_join(cp00, att2000, by = "id")
-#merged00 <- subset(merged00, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, X, sigma_all.y, RANK.y, all_cp.y ))
-# renaming 
-#merged00 <- merged00 %>% rename(iso_o = id)
-merged00 <- merged00 %>% rename(sigma_cp = sigma_all.x)
-merged00 <- merged00 %>% rename(rank_cp = RANK.x)
-merged00 <- merged00 %>% rename(cp = all_cp.x)
-merged00 <- merged00 %>% rename(country = country_x)
-```
 
-```{r}
-colnames(merged00)
-```
 
 # 2001
 ```{r}
@@ -125,7 +114,6 @@ vertex_attr_names(tot01)
 ```
 
 ```{r}
-
 length(unique(V(tot01)$name)) == gorder(tot01) 
 is.character(V(tot01)$name) 
 length(unique(att2001$iso_o)) == length(unique(V(tot01)$name))
@@ -141,23 +129,9 @@ unique(nchar(cp01$id))
 unique(nchar(att2001$iso_o))
 head(cp01$id)
 head(att2001$iso_o)
-```
-
-```{r}
 merged01 <- merge(cp01, att2001, by.x = "id", by.y = "iso_o", all.x = TRUE)
-#merged01 <- left_join(cp01, att2001, by = "id")
-merged01 <- subset(merged01, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged01 <- merged01 %>% rename(iso_o = id)
-merged01 <- merged01 %>% rename(sigma_cp = sigma_all)
-merged01 <- merged01 %>% rename(rank_cp = RANK)
-merged01 <- merged01 %>% rename(cp = all_cp)
-merged01 <- merged01 %>% rename(country = country_x)
 ```
 
-```{r}
-colnames(merged01)
-```
 # 2002
 ```{r}
 y2 <- "X2002"   
@@ -189,14 +163,6 @@ cp02 <- ITNcp02[[2]]
 ```
 ```{r}
 merged02 <- merge(cp02, att2002, by.x = "id", by.y = "iso_o", all.x = TRUE)
-#merged01 <- left_join(cp01, att2001, by = "id")
-merged02 <- subset(merged02, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged02 <- merged02 %>% rename(iso_o = id)
-merged02 <- merged02 %>% rename(sigma_cp = sigma_all)
-merged02 <- merged02 %>% rename(rank_cp = RANK)
-merged02 <- merged02 %>% rename(cp = all_cp)
-merged02 <- merged02 %>% rename(country = country_x)
 ```
 
 # 2003
@@ -228,15 +194,9 @@ ITNcp03 <-core_periphery_weighted(tot03,"directed")
 class(ITNcp03[[2]])
 cp03 <- ITNcp03[[2]]
 ```
+
 ```{r}
 merged03 <- merge(cp03, att2003, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged03 <- subset(merged03, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged03 <- merged03 %>% rename(iso_o = id)
-merged03 <- merged03 %>% rename(sigma_cp = sigma_all)
-merged03 <- merged03 %>% rename(rank_cp = RANK)
-merged03 <- merged03 %>% rename(cp = all_cp)
-merged03 <- merged03 %>% rename(country = country_x)
 ```
 
 
@@ -269,13 +229,6 @@ cp04 <- ITNcp04[[2]]
 ```
 ```{r}
 merged04 <- merge(cp04, att2004, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged04 <- subset(merged04, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged04 <- merged04 %>% rename(iso_o = id)
-merged04 <- merged04 %>% rename(sigma_cp = sigma_all)
-merged04 <- merged04 %>% rename(rank_cp = RANK)
-merged04 <- merged04 %>% rename(cp = all_cp)
-merged04 <- merged04 %>% rename(country = country_x)
 ```
 
 # 2005
@@ -308,13 +261,6 @@ cp05 <- ITNcp05[[2]]
 
 ```{r}
 merged05 <- merge(cp05, att2005, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged05 <- subset(merged05, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged05 <- merged05 %>% rename(iso_o = id)
-merged05 <- merged05 %>% rename(sigma_cp = sigma_all)
-merged05 <- merged05 %>% rename(rank_cp = RANK)
-merged05 <- merged05 %>% rename(cp = all_cp)
-merged05 <- merged05 %>% rename(country = country_x)
 ```
 
 # 2006
@@ -347,13 +293,6 @@ cp06 <- ITNcp06[[2]]
 
 ```{r}
 merged06 <- merge(cp06, att2006, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged06 <- subset(merged06, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged06 <- merged06 %>% rename(iso_o = id)
-merged06 <- merged06 %>% rename(sigma_cp = sigma_all)
-merged06 <- merged06 %>% rename(rank_cp = RANK)
-merged06 <- merged06 %>% rename(cp = all_cp)
-merged06 <- merged06 %>% rename(country = country_x)
 ```
 
 # 2007
@@ -384,13 +323,6 @@ cp07 <- ITNcp07[[2]]
 ```
 ```{r}
 merged07 <- merge(cp07, att2007, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged07 <- subset(merged07, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged07 <- merged07 %>% rename(iso_o = id)
-merged07 <- merged07 %>% rename(sigma_cp = sigma_all)
-merged07 <- merged07 %>% rename(rank_cp = RANK)
-merged07 <- merged07 %>% rename(cp = all_cp)
-merged07 <- merged07 %>% rename(country = country_x)
 ```
 
 
@@ -422,13 +354,6 @@ cp08 <- ITNcp08[[2]]
 ```
 ```{r}
 merged08 <- merge(cp08, att2008, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged08 <- subset(merged08, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged08 <- merged08 %>% rename(iso_o = id)
-merged08 <- merged08 %>% rename(sigma_cp = sigma_all)
-merged08 <- merged08 %>% rename(rank_cp = RANK)
-merged08 <- merged08 %>% rename(cp = all_cp)
-merged08 <- merged08 %>% rename(country = country_x)
 ```
 
 # 2009
@@ -459,13 +384,6 @@ cp09 <- ITNcp09[[2]]
 ```
 ```{r}
 merged09 <- merge(cp09, att2009, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged09 <- subset(merged09, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged09 <- merged09 %>% rename(iso_o = id)
-merged09 <- merged09 %>% rename(sigma_cp = sigma_all)
-merged09 <- merged09 %>% rename(rank_cp = RANK)
-merged09 <- merged09 %>% rename(cp = all_cp)
-merged09 <- merged09 %>% rename(country = country_x)
 ```
 
 # 2010
@@ -497,13 +415,6 @@ cp10 <- ITNcp10[[2]]
 
 ```{r}
 merged10 <- merge(cp10, att2010, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged10 <- subset(merged10, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged10 <- merged10 %>% rename(iso_o = id)
-merged10 <- merged10 %>% rename(sigma_cp = sigma_all)
-merged10 <- merged10 %>% rename(rank_cp = RANK)
-merged10 <- merged10 %>% rename(cp = all_cp)
-merged10 <- merged10 %>% rename(country = country_x)
 ```
 
 # 2011
@@ -534,13 +445,6 @@ cp11 <- ITNcp11[[2]]
 ```
 ```{r}
 merged11 <- merge(cp11, att2011, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged11 <- subset(merged11, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged11 <- merged11 %>% rename(iso_o = id)
-merged11 <- merged11 %>% rename(sigma_cp = sigma_all)
-merged11 <- merged11 %>% rename(rank_cp = RANK)
-merged11 <- merged11 %>% rename(cp = all_cp)
-merged11 <- merged11 %>% rename(country = country_x)
 ```
 
 # 2012
@@ -571,13 +475,6 @@ cp12 <- ITNcp12[[2]]
 ```
 ```{r}
 merged12 <- merge(cp12, att2012, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged12 <- subset(merged12, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged12 <- merged12 %>% rename(iso_o = id)
-merged12 <- merged12 %>% rename(sigma_cp = sigma_all)
-merged12 <- merged12 %>% rename(rank_cp = RANK)
-merged12 <- merged12 %>% rename(cp = all_cp)
-merged12 <- merged12 %>% rename(country = country_x)
 ```
 
 # 2013
@@ -609,13 +506,6 @@ cp13 <- ITNcp13[[2]]
 
 ```{r}
 merged13 <- merge(cp13, att2013, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged13 <- subset(merged13, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged13 <- merged13 %>% rename(iso_o = id)
-merged13 <- merged13 %>% rename(sigma_cp = sigma_all)
-merged13 <- merged13 %>% rename(rank_cp = RANK)
-merged13 <- merged13 %>% rename(cp = all_cp)
-merged13 <- merged13 %>% rename(country = country_x)
 ```
 
 # 2014
@@ -648,13 +538,6 @@ cp14 <- ITNcp14[[2]]
 
 ```{r}
 merged14 <- merge(cp14, att2014, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged14 <- subset(merged14, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged14 <- merged14 %>% rename(iso_o = id)
-merged14 <- merged14 %>% rename(sigma_cp = sigma_all)
-merged14 <- merged14 %>% rename(rank_cp = RANK)
-merged14 <- merged14 %>% rename(cp = all_cp)
-merged14 <- merged14 %>% rename(country = country_x)
 ```
 
 
@@ -686,13 +569,6 @@ cp15 <- ITNcp15[[2]]
 ```
 ```{r}
 merged15 <- merge(cp15, att2015, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged15 <- subset(merged15, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged15 <- merged15 %>% rename(iso_o = id)
-merged15 <- merged15 %>% rename(sigma_cp = sigma_all)
-merged15 <- merged15 %>% rename(rank_cp = RANK)
-merged15 <- merged15 %>% rename(cp = all_cp)
-merged15 <- merged15 %>% rename(country = country_x)
 ```
 
 
@@ -725,13 +601,6 @@ cp16 <- ITNcp16[[2]]
 
 ```{r}
 merged16 <- merge(cp16, att2016, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged16 <- subset(merged16, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged16 <- merged16 %>% rename(iso_o = id)
-merged16 <- merged16 %>% rename(sigma_cp = sigma_all)
-merged16 <- merged16 %>% rename(rank_cp = RANK)
-merged16 <- merged16 %>% rename(cp = all_cp)
-merged16 <- merged16 %>% rename(country = country_x)
 ```
 
 # 2017
@@ -764,13 +633,6 @@ cp17 <- ITNcp17[[2]]
 
 ```{r}
 merged17 <- merge(cp17, att2017, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged17 <- subset(merged17, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged17 <- merged17 %>% rename(iso_o = id)
-merged17 <- merged17 %>% rename(sigma_cp = sigma_all)
-merged17 <- merged17 %>% rename(rank_cp = RANK)
-merged17 <- merged17 %>% rename(cp = all_cp)
-merged17 <- merged17 %>% rename(country = country_x)
 ```
 
 #2018
@@ -803,13 +665,6 @@ cp18 <- ITNcp18[[2]]
 
 ```{r}
 merged18 <- merge(cp18, att2018, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged18 <- subset(merged18, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged18 <- merged18 %>% rename(iso_o = id)
-merged18 <- merged18 %>% rename(sigma_cp = sigma_all)
-merged18 <- merged18 %>% rename(rank_cp = RANK)
-merged18 <- merged18 %>% rename(cp = all_cp)
-merged18 <- merged18 %>% rename(country = country_x)
 ```
 
 # 2019
@@ -840,13 +695,6 @@ cp19 <- ITNcp19[[2]]
 ```
 ```{r}
 merged19 <- merge(cp19, att2019, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged19 <- subset(merged19, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged19 <- merged19 %>% rename(iso_o = id)
-merged19 <- merged19 %>% rename(sigma_cp = sigma_all)
-merged19 <- merged19 %>% rename(rank_cp = RANK)
-merged19 <- merged19 %>% rename(cp = all_cp)
-merged19 <- merged19 %>% rename(country = country_x)
 ```
 
 # 2020
@@ -877,13 +725,12 @@ cp20 <- ITNcp20[[2]]
 ```
 ```{r}
 merged20 <- merge(cp20, att2020, by.x = "id", by.y = "iso_o", all.x = TRUE)
-merged20 <- subset(merged20, select = -c(sigma_in, sigma_out, RANKout, RANKin, in_cp, out_cp, country_y))
-# renaming 
-merged20 <- merged20 %>% rename(iso_o = id)
-merged20 <- merged20 %>% rename(sigma_cp = sigma_all)
-merged20 <- merged20 %>% rename(rank_cp = RANK)
-merged20 <- merged20 %>% rename(cp = all_cp)
-merged20 <- merged20 %>% rename(country = country_x)
+```
+
+```{r}
+table(merged00$all_cp)
+table(merged01$all_cp)
+table(merged20$all_cp)
 ```
 
 
