@@ -5,13 +5,9 @@
 
 ```mermaid
 flowchart TD
-    A((Start)) --> B[01_preparing]
+    A((Start)) --> B[01_preparation_&_analysis]
     B -->|Uses data from| C[(data/raw)]
     B -->|Saves cleaned data to| D[(data/cleaned)]
-    D --> |Uses data to conduct exploratory analysis|E[02_eda]
-    E -->|generates network metric datasets| D
-    D --> |data goes to|F[03_regressions]
-    F -->|runs regressions|H[\results/]
-    H -->|stores and displays results|I((End))
-
+    D --> |Uses data to conduct analysis| B[01_preparation_&_analysis]
+    B -->|saves plots|E[plots]
 ```
