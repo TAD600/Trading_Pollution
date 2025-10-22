@@ -6,68 +6,34 @@ output: html_document
 ---
 
 ## raw 
-# This subfolder has 14 csv files
-`702e5907-a97c-4e0a-9f8f-511ea9b80ab0_Data.csv`: Internet penetration (% of people) from WDI
-`ad57150c-c77e-4bee-bb87-4174bb32e6a0_Data.csv`: GDP per capita from WDI
+# This subfolder has 11 csv files
+`35c7051d-c047-4d2a-b459-9b4e6ee01d98_Data.csv`: Trade (% of GDP) from WDI
+`702e5907-a97c-4e0a-9f8f-511ea9b80ab0_Data.csv`: Individuals using the Internet (% of population) from WDI
+`a2c15875-4f14-40eb-bf3f-f4755d164953_Data.csv`: Energy use (kg of oil equivalent per capita)
+`ad57150c-c77e-4bee-bb87-4174bb32e6a0_Data.csv`: GDP per capita (constant 2015 US$) from WDI
+`b1accbee-a743-40b0-b105-526ca6c03a1c_Data.csv`: Carbon dioxide (CO2) emissions excluding LULUCF per capita (t CO2e/capita) from WDI
+`d92eb14e-b603-4183-ac5b-acfd4c423b78_Data.csv`: Population density (people per sq. km of land area)
 `hdr-data.xlsx`: UNDP HDR data on mean year of schooling from 
 `geo_cepii.csv`: Country level fixed attributes from CEPII 
-`dist_cepii.csv`: Country pair level fixed attributed from CEPII
 
 `IMF_classifiaction.xlsx`: The excel file containing country classification as 'Advanced' and 'Emerging and Developing' is generated from this IMF webpage, https://www.imf.org/en/Publications/WEO/weo-database/2025/april/groups-and-aggregates#oem
 
-`rta_2024028.csv`: Mario Larch's Regional Trade Agreements Database from Eggar and Larch (2008)
-https://www.ewf.uni-bayreuth.de/en/research/RTA-data/index.html
-
 `LTE.xlsx`: LTE adoptation data was generated from GSA report of October 13, 2015. Official materials and local newspaper reports were the source of LTE adoptation year for countries those were not present in the GSA report.
-
-`BIMTS_HS2017_2D_CSV_1995_To_2023` downloaded from [OECD BIMTS database](https://data-explorer.oecd.org/vis?fs[0]=Topic%2C1%7CTrade%23TRD%23%7CTrade%20in%20goods%20and%20services%23TRD_GDS%23&pg=0&fc=Topic&bp=true&snb=24&df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_BIMTS%40DF_BIMTS_HS2017_2D&df[ag]=OECD.SDD.TPS&df[vs]=1.0) produces,
-`HS17_2D_DE_2000_To_2004.csv`
-`HS17_2D_DE_2005_To_2009.csv`
-`HS17_2D_DE_2010_To_2014.csv`
-`HS17_2D_DE_2015_To_2019.csv`
-`HS17_2D_DE_2020_To_2023.csv`
 
 `DF_TRADE.csv`: This file contains the Greenhouse Gas Footprints (GHGFP): Emissions embodied in bilateral trade from here, 
  https://data-explorer.oecd.org/?tm=DF_ICIO_GHG_TRADE_2023
 Unit of measure: Tonnes of CO2-equivalent
-
-All these six files downloaded from OECD are more than 2GB in size.Reproduction requires downloading the datasets from the links I have mentioned above and extracting the zip files in the `raw` subfolder.
-
-
+This file downloaded from OECD is more than 2GB in size. Reproduction requires downloading the datasets from the above mentioned link. 
+  
 ## cleaned
-# This subfolder has 43 csv files
+# This subfolder has 23 csv files
 
-`trade2000_2020.csv`: This is the cleaned dataset for total product trade produced from five csv files extracted from the bulk file (BIMTS_HS2017_2D_CSV_1995_To_2023) with the code '_T'.
-`total_edgelist.csv`: This is an edgelist created from `trade2000_2020.csv`.
 
-`dyads_fixed.csv`: This is a cleaned dataset produced from dist_cepii data. It records time invariant dyadic variables, like, common language, common colonizer, distance etc. 
-`nodal_fixed.csv`: This is cleaned dataset produced from geo_cepii data, which has node level time invariant factors like landlockedness, primary language, continent, longitude, latitue etc. 
-`fixed.csv`: This file is produced from above 2 files nestedly indexing on the country pairs and records all time invariants factors for both dyadic and nodal level. This will be used in the gravity equation estimation. 
+`emission_trade_edgelist.csv`: Edgelist created from `emission_trade data from OECD`
 
-`rta_long.csv`: This is the dyad level RTA dataset in the long format.
-`rta_edgelist.csv`: This is dyadic level time variant edgelist created from `rta_long.csv`.
+`pollution_trade.csv`: This is a panel data consisting all the variables needed for further analysis
 
-`emission_trade2000_2020.csv`: long format emission data created from `DF_TRADE.csv`
-`emission_trade_edgelist.csv`: edgelist created from `emission_trade2000_2020.csv`
-
-`distance_edgelist.csv`: This is dyadic distance edgelist created from `fixed.csv`.
-`contiguity_edgelisst.csv`: This is dyadic contiguity edgelist created from `fixed.csv`.
-`colonizer_edgelist.csv`: This is dyadic past colony-colonizer edgelist created from `fixed.csv`.
-`comcol_edgelist.csv`: This is dyadic common colonizer edgelist created from `fixed.csv`.
-`language_edgelist.csv`: This is dyadic language edgelist created from `fixed.csv`.
-
-`LTE.csv`: LTE adoptation data prepared from `LTE.xlsx`
-`LTE_long.csv`: LTE adoptation data in long format
-
-`internet.csv`: cleaned internet penetration data as an edglelist
-`internet_long.csv`: `internet.csv` stacked to long format
-`gdp_pct.csv`: cleaned GDP per capita data as an edglelist
-`gdp_pct_long.csv`: `gdp_per_capita.csv` stacked to long format
-`schooling.csv`: mean year of schooling in ong format
-`nodal_time_series.csv`: merge of schooling, internet and gdp per capita datsets
-
-`attributeYEAR.csv': There are 21 files like this name. These are the time varying nodal attributes merged on the fixed attributes created for node attributes of the network objects.
-
+`attributeYEAR.csv': There are 21 files like this name. These are the time varying nodal attributes for network visualizations.  
 
 
 
