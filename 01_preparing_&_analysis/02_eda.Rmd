@@ -1,0 +1,278 @@
+---
+title: "Plots"
+author: "Author"
+date: "2025-11-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+e <- read.csv("../data/cleaned/pollution_trade.csv", header = TRUE, as.is = TRUE, stringsAsFactors = FALSE)
+```
+
+```{r}
+library(ggplot2)
+library(rworldmap)
+library(dplyr)
+library(sf)
+library(tidyverse) 
+library(patchwork)
+library(ggnewscale)
+library(sf)
+library(ggbump)
+library(tidyr)
+```
+
+
+```{r}
+max_rank <- 10
+
+top_ten2020 <- e %>% filter(TIME_PERIOD ==2020, importing <= max_rank) %>% pull(country)
+selected <- e %>% filter(country %in% top_ten2020)
+```
+
+```{r}
+selected
+```
+
+
+```{r}
+country_color <- c('royalblue', 'dodgerblue2', 'royalblue3','blue','dodgerblue3', 'royalblue2','cornflowerblue', 'skyblue3', 'darkorange2', 'navy')
+
+names(country_color) <- top_ten2020
+label_color <- 'grey30'
+
+country_color
+
+```
+
+
+```{r}
+filled_data <- selected %>% complete(TIME_PERIOD, country)
+
+imp <- filled_data %>% 
+  ggplot(aes(TIME_PERIOD, importing, col = country)) + 
+  geom_point(shape = '|', stroke = 4) + 
+  ggbump::geom_bump(linewidth = 2) + 
+
+  geom_text(
+    data = filled_data |> filter(TIME_PERIOD == 1995), 
+    aes(label = country), 
+    hjust = 1,         
+    nudge_x = -0.05,     
+    size = 4, 
+    fontface = 'bold') + 
+   geom_text(
+    data = filled_data |> filter(TIME_PERIOD == 2020), 
+    aes(label = importing), 
+    hjust = 0,          
+    nudge_x = 0.1,     
+    size = 4, 
+    fontface = 'bold') + 
+ annotate('text',x = seq(1995, 2020, 1), y = 0.01, label = seq(1995, 2020, 1), 
+           hjust = 0.5,
+           vjust = 1,
+           size = 4,
+           fontface = 'bold',
+           color = label_color) +
+  scale_color_manual(values = country_color, na.value = "transparent") + 
+  scale_x_continuous(breaks = seq(1995, 2020, by = 1)) + 
+  coord_cartesian(xlim = c(1992, 2020.5), ylim = c(35, 0.05), expand = F) + 
+  theme_void(base_size = 12) + 
+  labs(title = 'Top ten emission outsourcing countries of 2020', subtitle = 'Rank by the net import value of trade embodied emission') + 
+  theme(
+    legend.position = 'none', 
+    plot.background = element_rect(fill = 'white', color = NA), 
+    plot.margin = margin(t=2, r=20, b=2, l=5, unit = 'mm'), 
+    text = element_text(color = label_color), 
+    plot.title = element_text(face = 'bold', family = 'Merriweather')
+  )
+
+```
+
+
+```{r}
+ggsave("../plots/Fig2.tiff", plot = imp, device = "tiff", width = 15, height = 10, dpi = 800, bg = "white")
+```
+
+
+
+```{r}
+bottom_ten2020 <- e %>% filter(TIME_PERIOD ==2020, exporting <= max_rank) %>% pull(country)
+selected_ex <- e %>% filter(country %in% bottom_ten2020)
+selected_ex
+```
+
+```{r}
+country_color_ex <- c('sienna2', 'dodgerblue', 'sienna1','orange','tan2', 'orange2','blue', 'indianred2', 'darkorange2', 'darkorange1')
+
+names(country_color_ex) <- bottom_ten2020
+country_color_ex
+```
+```{r}
+filled_data2 <- selected_ex %>% complete(TIME_PERIOD, country)
+
+exp <- filled_data2 %>% 
+  ggplot(aes(TIME_PERIOD, exporting, col = country)) + 
+  geom_point(shape = '|', stroke = 4) + 
+  ggbump::geom_bump(linewidth = 2) + 
+
+  geom_text(
+    data = filled_data2 |> filter(TIME_PERIOD == 1995), 
+    aes(label = country), 
+    hjust = 1,         
+    nudge_x = -0.05,     
+    size = 4, 
+    fontface = 'bold') + 
+   geom_text(
+    data = filled_data2 |> filter(TIME_PERIOD == 2020), 
+    aes(label = exporting), 
+    hjust = 0,          
+    nudge_x = 0.1,     
+    size = 4, 
+    fontface = 'bold') + 
+ annotate('text',x = seq(1995, 2020, 1), y = 0.01, label = seq(1995, 2020, 1), 
+           hjust = 0.5,
+           vjust = 1,
+           size = 4,
+           fontface = 'bold',
+           color = label_color) +
+  scale_color_manual(values = country_color_ex, na.value = "transparent") + 
+  scale_x_continuous(breaks = seq(1995, 2020, by = 1)) + 
+  coord_cartesian(xlim = c(1993, 2020.5), ylim = c(55, 0.02), expand = F) + 
+  theme_void(base_size = 12) + 
+  labs(title = 'Top ten emission exporting countries of 2020', subtitle = 'Rank by the net export value of trade embodied emission') + 
+  theme(
+    legend.position = 'none', 
+    plot.background = element_rect(fill = 'white', color = NA), 
+    plot.margin = margin(t=2, r=20, b=2, l=5, unit = 'mm'), 
+    text = element_text(color = label_color), 
+    plot.title = element_text(face = 'bold', family = 'Merriweather')
+  )
+```
+
+
+```{r}
+ggsave("../plots/Fig3.tiff", plot = exp, device = "tiff", width = 15, height = 10, dpi = 800, bg = "white")
+```
+
+
+#World Map
+
+```{r}
+att1995 <- e[e$TIME_PERIOD == 1995, ]
+att2008 <- e[e$TIME_PERIOD == 2008, ]
+att2020 <- e[e$TIME_PERIOD == 2020, ]
+```
+
+
+```{r}
+world_map <- getMap(resolution = "low")
+world_map_sf <- st_as_sf(world_map)
+```
+
+```{r}
+world_map_sf$id <- as.character(world_map_sf$ISO3)
+att1995$iso_o <- as.character(att1995$iso_o)
+att2008$iso_o <- as.character(att2008$iso_o)
+att2020$iso_o <- as.character(att2020$iso_o)
+head(world_map_sf$id)
+head(att1995$iso_o)
+head(att2008$iso_o)
+head(att2020$iso_o)
+```
+
+```{r}
+map95 <- merge(world_map_sf, att1995, by.x= "id", by.y = "iso_o", all.x = TRUE)
+map08 <- merge(world_map_sf, att2008, by.x= "id", by.y = "iso_o", all.x = TRUE)
+map20 <- merge(world_map_sf, att2020, by.x= "id", by.y = "iso_o", all.x = TRUE)
+table(is.na(map95$development))
+table(is.na(map08$development))
+table(is.na(map20$development))
+```
+
+```{r}
+p1 <- ggplot(map95) + geom_sf(data = map95 %>% filter(!is.na(net_imp)), aes(fill = net_imp)) +
+      scale_fill_continuous(low = "white", high = "darkslategray", name = "Net import 1995") + new_scale_fill() + geom_sf(data = map95 %>%   filter(is.na(net_imp)), aes(fill = "NA"), show.legend = TRUE) + scale_fill_manual(name = NULL, values = c("NA" = "grey"), labels = "NA") + 
+      ggtitle("Emission outsourcers in 1995") + 
+      theme(plot.title = element_text(size = 11, face = "bold"))
+
+p2 <- ggplot(map08) + geom_sf(data = map08 %>% filter(!is.na(net_imp)), aes(fill = net_imp)) +
+      scale_fill_continuous(low = "white", high = "darkslategray", name = "Net import 2008") + new_scale_fill() + geom_sf(data = map08 %>%   filter(is.na(net_imp)), aes(fill = "NA"), show.legend = TRUE) + scale_fill_manual(name = NULL, values = c("NA" = "grey"), labels = "NA") + 
+      ggtitle("Emission outsourcers in 2008") + 
+      theme(plot.title = element_text(size = 11, face = "bold"))
+
+p3 <- ggplot(map20) + geom_sf(data = map20 %>% filter(!is.na(net_imp)), aes(fill = net_imp)) +
+      scale_fill_continuous(low = "white", high = "darkslategray", name = "Net import 2020") + new_scale_fill() + geom_sf(data = map20 %>%   filter(is.na(net_imp)), aes(fill = "NA"), show.legend = TRUE) + scale_fill_manual(name = NULL, values = c("NA" = "grey"), labels = "NA") + 
+      ggtitle("Emission outsourcers in 2020") + 
+      theme(plot.title = element_text(size = 11, face = "bold"))
+
+p4 <- ggplot(map95) + geom_sf(data = map95 %>% filter(!is.na(co2)), aes(fill = co2)) +
+      scale_fill_continuous(low = "white", high = "burlywood4", name = "co2 1995") + new_scale_fill() + geom_sf(data = map95 %>%   filter(is.na(co2)), aes(fill = "NA"), show.legend = TRUE) + scale_fill_manual(name = NULL, values = c("NA" = "grey"), labels = "NA") + 
+      ggtitle("Per capita CO2 emission in 1995") + 
+      theme(plot.title = element_text(size = 11, face = "bold"))
+
+p5 <- ggplot(map08) + geom_sf(data = map08 %>% filter(!is.na(co2)), aes(fill = co2)) +
+      scale_fill_continuous(low = "white", high = "burlywood4", name = "co2 2008") + new_scale_fill() + geom_sf(data = map20 %>%   filter(is.na(co2)), aes(fill = "NA"), show.legend = TRUE) + scale_fill_manual(name = NULL, values = c("NA" = "grey"), labels = "NA") + 
+      ggtitle("Per capita CO2 emission in 2008") + 
+      theme(plot.title = element_text(size = 11, face = "bold"))
+
+
+p6 <- ggplot(map20) + geom_sf(data = map20 %>% filter(!is.na(co2)), aes(fill = co2)) +
+      scale_fill_continuous(low = "white", high = "burlywood4", name = "co2 2020") + new_scale_fill() + geom_sf(data = map20 %>%   filter(is.na(co2)), aes(fill = "NA"), show.legend = TRUE) + scale_fill_manual(name = NULL, values = c("NA" = "grey"), labels = "NA") + 
+      ggtitle("Per capita CO2 emission in 2020") + 
+      theme(plot.title = element_text(size = 11, face = "bold"))
+
+```
+
+```{r}
+emission <- (p1 | p4) / (p2 | p5) / (p3 | p6)  + 
+  plot_layout(guides = "collect", ncol = 1, heights = c(1, 1, 1)) &
+  theme(
+    plot.margin = margin(0, 1.5, 0, 1),
+    panel.spacing = unit(0, "lines"),
+    legend.key.size = unit(0.2, "cm"),
+    legend.text = element_text(size = 6),
+    legend.title = element_text(size = 8),
+    legend.position = "right")
+```
+
+
+```{r}
+emission
+```
+
+
+
+```{r}
+ggsave("../plots/Fig3.tiff", plot = emission, device = "tiff", width = 12, height = 9, dpi = 800, bg = "white")
+```
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

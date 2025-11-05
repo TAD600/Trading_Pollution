@@ -7,18 +7,16 @@ output: html_document
 
 ## raw 
 # This subfolder has 11 csv files
-`35c7051d-c047-4d2a-b459-9b4e6ee01d98_Data.csv`: Trade (% of GDP) from WDI
-`702e5907-a97c-4e0a-9f8f-511ea9b80ab0_Data.csv`: Individuals using the Internet (% of population) from WDI
-`a2c15875-4f14-40eb-bf3f-f4755d164953_Data.csv`: Energy use (kg of oil equivalent per capita)
-`ad57150c-c77e-4bee-bb87-4174bb32e6a0_Data.csv`: GDP per capita (constant 2015 US$) from WDI
-`b1accbee-a743-40b0-b105-526ca6c03a1c_Data.csv`: Carbon dioxide (CO2) emissions excluding LULUCF per capita (t CO2e/capita) from WDI
-`d92eb14e-b603-4183-ac5b-acfd4c423b78_Data.csv`: Population density (people per sq. km of land area)
-`hdr-data.xlsx`: UNDP HDR data on mean year of schooling from 
+`fd0b25fb-ca96-469d-b103-75a1a9737d12_Data`: Trade (% of GDP) from WDI
+`ef199ab8-5622-479a-ac78-3c81678fe8db_Data`: Individuals using the Internet (% of population) from WDI
+`fe3ba000-c22a-442d-b14a-150b8ebb0d04_Data`: Energy use (kg of oil equivalent per capita)
+`3b393571-3769-446b-8a79-c591be497b98_Data`: GDP per capita (constant 2015 US$) from WDI
+`ed44d45b-73bc-40c4-af99-2737916812f9_Data`: Carbon dioxide (CO2) emissions excluding LULUCF per capita (t CO2e/capita) from WDI
+`08991918-fd28-4b39-9ab5-47a2294938ed_Data.csv`: Manufacturing value added (% of GDP)
+`9f252d98-47a9-4552-a76c-c3e9d7b86dd7_Data.csv`: Renewable energy consumption (% of total energy consumption)
 `geo_cepii.csv`: Country level fixed attributes from CEPII 
 
 `IMF_classifiaction.xlsx`: The excel file containing country classification as 'Advanced' and 'Emerging and Developing' is generated from this IMF webpage, https://www.imf.org/en/Publications/WEO/weo-database/2025/april/groups-and-aggregates#oem
-
-`LTE.xlsx`: LTE adoptation data was generated from GSA report of October 13, 2015. Official materials and local newspaper reports were the source of LTE adoptation year for countries those were not present in the GSA report.
 
 `DF_TRADE.csv`: This file contains the Greenhouse Gas Footprints (GHGFP): Emissions embodied in bilateral trade from here, 
  https://data-explorer.oecd.org/?tm=DF_ICIO_GHG_TRADE_2023
@@ -26,15 +24,9 @@ Unit of measure: Tonnes of CO2-equivalent
 This file downloaded from OECD is more than 2GB in size. Reproduction requires downloading the datasets from the above mentioned link. 
   
 ## cleaned
-# This subfolder has 23 csv files
-
-
-`emission_trade_edgelist.csv`: Edgelist created from `emission_trade data from OECD`
-
 `pollution_trade.csv`: This is a panel data consisting all the variables needed for further analysis
-
-`attributeYEAR.csv': There are 21 files like this name. These are the time varying nodal attributes for network visualizations.  
-
+`advanced_economies.csv`: List of advanced economies among the countries
+`developing_economies.csv`: List of developing economies among the countries
 
 
 
