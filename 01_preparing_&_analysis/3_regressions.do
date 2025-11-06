@@ -222,7 +222,7 @@ nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 ************************************ Fitted Line Graph********
 twoway (qfit net_imp gdp_pct if development == 1, clcolor(midblue)), title("Advanced economies") ytitle("Net Import of embodied GHG") xtitle("GDP per capita") name(p1, replace)
 twoway (qfit net_imp gdp_pct if development == 0, clcolor(orange_red)), title("Developing economies") ytitle("Net Import of embodied GHG") xtitle("GDP per capita") name(p2, replace)
-twoway (qfit co2 gdp_pct if development == 1, clcolor(midblue)), title("Advanced economies") ytitle("CO2 Emissionsper capita") xtitle("GDP per capita") name(p3, replace)
+twoway (qfit co2 gdp_pct if development == 1, clcolor(midblue)), title("Advanced economies") ytitle("CO2 Emissions per capita") xtitle("GDP per capita") name(p3, replace)
 twoway (qfit co2 gdp_pct if development == 0, clcolor(orange_red)), title("Developing economies") ytitle("CO2 Emissions per capita") xtitle("GDP per capita") name(p4, replace)
 graph combine p1 p2 p3 p4, cols(2) title("Quadratic Fits by Development Status")
 
@@ -230,9 +230,9 @@ graph combine p1 p2 p3 p4, cols(2) title("Quadratic Fits by Development Status")
 graph export "D:\project2025\Pollution\Trading_Pollution\plots\Fig4.tif", as(tif) name("Graph")
 
 
-
 //// Dumitrescu and Hurlin Panel noncausality test (panel granger causality)
 *ssc install xtgcause
+xtgcause lnet_imp lngdp_pct, lags(1)
 xtgcause lnet_imp lngdp_pct
 xtgcause lngdp_pct net_imp
 xtgcause lnet_imp ltrade_openness

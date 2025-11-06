@@ -63,26 +63,26 @@ imp <- filled_data %>%
     aes(label = country), 
     hjust = 1,         
     nudge_x = -0.05,     
-    size = 4, 
+    size = 5, 
     fontface = 'bold') + 
    geom_text(
     data = filled_data |> filter(TIME_PERIOD == 2020), 
     aes(label = importing), 
     hjust = 0,          
     nudge_x = 0.1,     
-    size = 4, 
+    size = 5, 
     fontface = 'bold') + 
  annotate('text',x = seq(1995, 2020, 1), y = 0.01, label = seq(1995, 2020, 1), 
            hjust = 0.5,
            vjust = 1,
-           size = 4,
+           size = 5,
            fontface = 'bold',
            color = label_color) +
   scale_color_manual(values = country_color, na.value = "transparent") + 
   scale_x_continuous(breaks = seq(1995, 2020, by = 1)) + 
-  coord_cartesian(xlim = c(1992, 2020.5), ylim = c(35, 0.05), expand = F) + 
+  coord_cartesian(xlim = c(1992, 2020.5), ylim = c(35, 0.01), expand = F) + 
   theme_void(base_size = 12) + 
-  labs(title = 'Top ten emission outsourcing countries of 2020', subtitle = 'Rank by the net import value of trade embodied emission') + 
+  labs(title = 'Top ten emission outsourcing countries of 2020') + 
   theme(
     legend.position = 'none', 
     plot.background = element_rect(fill = 'white', color = NA), 
@@ -125,26 +125,26 @@ exp <- filled_data2 %>%
     aes(label = country), 
     hjust = 1,         
     nudge_x = -0.05,     
-    size = 4, 
+    size = 5, 
     fontface = 'bold') + 
    geom_text(
     data = filled_data2 |> filter(TIME_PERIOD == 2020), 
     aes(label = exporting), 
     hjust = 0,          
     nudge_x = 0.1,     
-    size = 4, 
+    size = 5, 
     fontface = 'bold') + 
  annotate('text',x = seq(1995, 2020, 1), y = 0.01, label = seq(1995, 2020, 1), 
            hjust = 0.5,
            vjust = 1,
-           size = 4,
+           size = 5,
            fontface = 'bold',
            color = label_color) +
   scale_color_manual(values = country_color_ex, na.value = "transparent") + 
   scale_x_continuous(breaks = seq(1995, 2020, by = 1)) + 
-  coord_cartesian(xlim = c(1993, 2020.5), ylim = c(55, 0.02), expand = F) + 
+  coord_cartesian(xlim = c(1993, 2020.5), ylim = c(55, 0.01), expand = F) + 
   theme_void(base_size = 12) + 
-  labs(title = 'Top ten emission exporting countries of 2020', subtitle = 'Rank by the net export value of trade embodied emission') + 
+  labs(title = 'Top ten emission exporting countries of 2020') + 
   theme(
     legend.position = 'none', 
     plot.background = element_rect(fill = 'white', color = NA), 
@@ -157,6 +157,10 @@ exp <- filled_data2 %>%
 
 ```{r}
 ggsave("../plots/Fig3.tiff", plot = exp, device = "tiff", width = 15, height = 10, dpi = 800, bg = "white")
+```
+
+```{r}
+----
 ```
 
 
