@@ -7,8 +7,8 @@ output: html_document
 
 This folder contains three files:
 
-`01_preparing.ipynb': This is a notebook file that cleans the data dragging from 'raw' subfolder, prepares the panel data file, and plots Fig1.tiff.
+`01_preparing.ipynb': This is a notebook file that cleans the data dragging from 'raw' sub-folder, prepares the panel data file, and plots Fig1.tiff.
 
 `02_eda.Rmd`: This is a markdown file plotting Fig2.tiff and Fig3.tiff.
 
-`03_regressions.do`: This is a stata do file containg the codes to run the statistical analysis. Besides, it plots Fig4.tiff. 
+`03_panel_analysis.do`: This is a stata do file containing the codes to run the statistical analysis. Besides, it plots Fig4.tiff. 
