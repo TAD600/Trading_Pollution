@@ -31,16 +31,16 @@ pwcorr lnet_imp lco2 lngdp_pct lngdp_pct2 ltrade_openness lmanufacturing lintern
 
 // Fitted Line Graph
 
-twoway (scatter net_imp gdp_pct if development == 1, mcolor(eltblue%40)) || (qfit net_imp gdp_pct if development == 1, clcolor(navy) clwidth(thick)),  name(g1, replace) legend(position(6) row(1) order(1 "Net import of CO2" 2 "Fitted values")) title("Advanced economies") ytitle("Fitted values of net import" "of embodied CO2 (metric tons)", size(small)) xtitle("GDP per capita (Constant prices, in USD)", size(small)) xlabel(, labsize(small)) ylabel(, labsize(small)) 
+twoway (scatter net_imp gdp_pct if development == 1, mcolor(eltblue%40)) || (qfit net_imp gdp_pct if development == 1, clcolor(navy) clwidth(thick)),  name(g1, replace) legend(position(6) row(1) order(1 "Net import of embodied CO2" 2 "Fitted values") size(small)) title("Advanced economies") ytitle("Fitted values of net import" "of embodied CO2 (metric tons)", size(small)) xtitle("GDP per capita (Constant prices, in USD)", size(small)) xlabel(, labsize(small)) ylabel(, labsize(small)) 
 
 
-twoway (scatter net_imp gdp_pct if development == 0, mcolor(eltblue%40)) || (qfit net_imp gdp_pct if development == 0, clcolor(orange_red) clwidth(thick)),  name(g2, replace) legend(position(6) row(1) order(1 "Net import of CO2" 2 "Fitted values")) title("Developing economies") ytitle("Fitted values of net import" "of embodied CO2 (metric tons)", size(small)) xtitle("GDP per capita (Constant prices, in USD)", size(small)) xlabel(, labsize(small)) ylabel(, labsize(small)) 
+twoway (scatter net_imp gdp_pct if development == 0, mcolor(eltblue%40)) || (qfit net_imp gdp_pct if development == 0, clcolor(orange_red) clwidth(thick)),  name(g2, replace) legend(position(6) row(1) order(1 "Net import of embodied CO2" 2 "Fitted values") size(small)) title("Developing economies") ytitle("Fitted values of net import" "of embodied CO2 (metric tons)", size(small)) xtitle("GDP per capita (Constant prices, in USD)", size(small)) xlabel(, labsize(small)) ylabel(, labsize(small)) 
 
 *yscale(range(-1500 1000))
 
-twoway (scatter co2 gdp_pct if development == 1, mcolor(eltblue%40)) || (qfit co2 gdp_pct if development == 1, clcolor(navy) clwidth(thick)), name(g3, replace) legend(position(6) row(1) order(1 "CO2" 2 "Fitted values")) title("Advanced economies") ytitle("Fitted values of CO2 Emissions" "per capita (metric tons)", size(small)) xtitle("GDP per capita (Constant prices, in USD)", size(small)) xlabel(, labsize(small)) ylabel(, labsize(small))
+twoway (scatter co2 gdp_pct if development == 1, mcolor(eltblue%40)) || (qfit co2 gdp_pct if development == 1, clcolor(navy) clwidth(thick)), name(g3, replace) legend(position(6) row(1) order(1 "CO2 emission (domestic)" 2 "Fitted values") size(small)) title("Advanced economies") ytitle("Fitted values of CO2 Emissions" "per capita (metric tons)", size(small)) xtitle("GDP per capita (Constant prices, in USD)", size(small)) xlabel(, labsize(small)) ylabel(, labsize(small))
 
-twoway (scatter co2 gdp_pct if development == 0, mcolor(eltblue%40)) || (qfit co2 gdp_pct if development == 0, clcolor(orange_red) clwidth(thick)), name(g4, replace) legend(position(6) row(1) order(1 "CO2" 2 "Fitted values")) title("Developing economies") ytitle("Fitted values of CO2 Emissions" "per capita (metric tons)", size(small)) xtitle("GDP per capita (Constant prices, in USD)", size(small)) xlabel(, labsize(small)) ylabel(, labsize(small))
+twoway (scatter co2 gdp_pct if development == 0, mcolor(eltblue%40)) || (qfit co2 gdp_pct if development == 0, clcolor(orange_red) clwidth(thick)), name(g4, replace) legend(position(6) row(1) order(1 "CO2 emission (domestic)" 2 "Fitted values") size(small)) title("Developing economies") ytitle("Fitted values of CO2 Emissions" "per capita (metric tons)", size(small)) xtitle("GDP per capita (Constant prices, in USD)", size(small)) xlabel(, labsize(small)) ylabel(, labsize(small))
 
 graph combine g1 g2 g3 g4, cols(2)
 
