@@ -222,43 +222,31 @@ gen lpop = ln(population)
 encode country, gen(id)
 xtset id time_period
 
-sum lngdp_pct
-sum lngdp_pct if development==1
-*min 8.44, max 11.38
-sum lngdp_pct if development==0
-*min 5.34, max 10.12
+
 
 **********************************************FGLS**************
 //NET_GHG
 
 **** Advanced Economies****
 xtgls lnet_imp lngdp_pct lngdp_pct2 if development==1, panels(correlated)
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 xtgls lnet_imp lngdp_pct lngdp_pct2 ltrade_openness lmanufacturing linternet lenergy if development==1, panels(correlated)
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 **** Developing Economies****
 xtgls lnet_imp lngdp_pct lngdp_pct2 if development==0, panels(correlated)
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 xtgls lnet_imp lngdp_pct lngdp_pct2 ltrade_openness lmanufacturing linternet lenergy if development==0, panels(correlated)
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 // CO2
 **** Advanced Economies****
 xtgls lco2 lngdp_pct lngdp_pct2 if development==1, panels(correlated)
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 xtgls lco2 lngdp_pct lngdp_pct2 ltrade_openness lmanufacturing linternet lenergy if development==1, panels(correlated)
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 **** Developing Economies****
 xtgls lco2 lngdp_pct lngdp_pct2 if development==0, panels(correlated)
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 xtgls lco2 lngdp_pct lngdp_pct2 ltrade_openness lmanufacturing linternet lenergy if development==0, panels(correlated)
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 
 
@@ -266,19 +254,14 @@ nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 //Net_GHG
 **** Advanced Economies****
 xtpcse lnet_imp lngdp_pct lngdp_pct2 if development==1
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 xtpcse lnet_imp lngdp_pct lngdp_pct2 ltrade_openness lmanufacturing linternet lenergy if development==1
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
-* 10.53 and significant
 
 
 **** Developing Economies****
 xtpcse lnet_imp lngdp_pct lngdp_pct2 if development==0
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 xtpcse lnet_imp lngdp_pct lngdp_pct2 ltrade_openness lmanufacturing linternet lenergy if development==0
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 
 //CO2
@@ -286,22 +269,15 @@ nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 **** Advanced Economies****
 //PCSE
 xtpcse lco2 lngdp_pct lngdp_pct2 if development==1
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 xtpcse lco2 lngdp_pct lngdp_pct2 ltrade_openness lmanufacturing linternet lenergy if development==1
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
-* 10.53 and significant
 
 
 **** Developing Economies****
 //PCSE
 xtpcse lco2 lngdp_pct lngdp_pct2 if development==0
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
 
 xtpcse lco2 lngdp_pct lngdp_pct2 ltrade_openness lmanufacturing linternet lenergy if development==0
-nlcom (_b[lngdp_pct]/(-2*_b[lngdp_pct2]))
-* 8.71 and significant
-
 
 //// Dumitrescu and Hurlin Panel noncausality test (panel granger causality)
 *ssc install xtgcause
