@@ -19,7 +19,8 @@ output: html_document
 `IMF_classifiaction.xlsx`: The excel file containing country classification as 'Advanced' and 'Emerging and Developing' is generated from this IMF webpage, https://www.imf.org/en/Publications/WEO/weo-database/2025/april/groups-and-aggregates#oem
 
 `DF_TRADE.csv`: This file contains the Greenhouse Gas Footprints (GHGFP): Emissions embodied in bilateral trade from here, 
- https://data-explorer.oecd.org/?tm=DF_ICIO_GHG_TRADE_2023
+https://data-explorer.oecd.org/vis?tm=DF_ICIO_GHG_TRADE_2023&snb=5&df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_ICIO_GHG_TRADE%40DF_ICIO_GHG_TRADE_2023&df[ag]=OECD.STI.PIE&df[vs]=1.0&dq=A.TRADE_GHG.W.._T..T_CO2E&pd=2020%2C&to[TIME_PERIOD]=false
+
 Unit of measure: Tonnes of CO2-equivalent
 This file downloaded from OECD is more than 2GB in size. Reproduction requires downloading the datasets from the above mentioned link. 
   
